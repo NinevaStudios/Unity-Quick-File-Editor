@@ -51,24 +51,12 @@ namespace DeadMosquito.Stickies
 
         void Init()
         {
-            if (NoteStorage.Instance.HasItem(_guid))
-            {
-                LoadData();
-            }
-            else
-            {
-                _noteData = new NoteData(_guid);
-            }
+            _noteData = new NoteData(_guid);
         }
 
         void LoadData()
         {
-            var fromSaved = NoteStorage.Instance.ItemByGuid(_guid);
-            _noteData = new NoteData(_guid)
-            {
-                text = fromSaved.text,
-                color = fromSaved.color
-            };
+
         }
         #endregion
 
@@ -102,7 +90,6 @@ namespace DeadMosquito.Stickies
 
         void OnDelete()
         {
-            NoteStorage.Instance.DeleteNote(_guid);
             _deleted = true;
             editorWindow.Close();
         }
@@ -110,31 +97,22 @@ namespace DeadMosquito.Stickies
         void OnColorSelected(NoteColor color)
         {
             _noteData.color = color;
-            Persist();
             _mode = Mode.Default;
         }
 
         #region callbacks
         public override void OnOpen()
         {
-            // Persist empty note if it doesn't exist
-            if (!NoteStorage.Instance.HasItem(_guid))
-            {
-                NoteStorage.Instance.AddOrUpdate(_noteData);
-            }
+
         }
 
         public override void OnClose()
         {
-            if (!_deleted)
-            {
-                Persist();
-            }
+
         }
 
         void Persist()
         {
-            NoteStorage.Instance.AddOrUpdate(_noteData);
         }
         #endregion
     }
