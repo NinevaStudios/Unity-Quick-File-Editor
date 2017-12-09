@@ -7,7 +7,7 @@ namespace DeadMosquito.QuickEditor
 
 	public class QuickEditorPopupWindowContent : PopupWindowContent
 	{
-		const float DefaultSize = 640f;
+		const float DefaultSize = 320f;
 
 		public override Vector2 GetWindowSize()
 		{
