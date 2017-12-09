@@ -11,7 +11,7 @@ namespace DeadMosquito.QuickEditor
 
 		public override Vector2 GetWindowSize()
 		{
-			return new Vector2(DefaultSize, DefaultSize);
+			return new Vector2(720, 400);
 		}
 
 		public override void OnGUI(Rect rect)
