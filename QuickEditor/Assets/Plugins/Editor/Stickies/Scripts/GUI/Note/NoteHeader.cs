@@ -9,19 +9,17 @@ namespace DeadMosquito.QuickEditor
     {
         public const float Height = 32f;
 
-        readonly Action _onPickColorBtnClick;
         readonly Action _onDeleteBtnClick;
 
-        public NoteHeader(Action onColorPick, Action onDelete)
+        public NoteHeader(Action onDelete)
         {
-            _onPickColorBtnClick = onColorPick;
             _onDeleteBtnClick = onDelete;
         }
 
         public void OnGUI(Rect rect, Colors.NoteColorCollection colors)
         {
             var headerRect = GetHeaderRect(rect);
-            StickiesGUI.ColorRect(headerRect, colors.header, Color.clear);
+            QuickEditorGUI.ColorRect(headerRect, colors.header, Color.clear);
 
             DrawDeleteButton(headerRect);
             DrawColorPickerButton(headerRect);
@@ -52,18 +50,17 @@ namespace DeadMosquito.QuickEditor
         {
             if (ColorPickerButton(headerRect))
             {
-                _onPickColorBtnClick();
             }
         }
 
         static bool DeleteButton(Rect headerRect)
         {
-            return StickiesGUI.TextureButton(GetDeleteBtnRect(headerRect), Assets.Textures.DeleteTexture);
+            return QuickEditorGUI.TextureButton(GetDeleteBtnRect(headerRect), Assets.Textures.DeleteTexture);
         }
 
         static bool ColorPickerButton(Rect headerRect)
         {
-            return StickiesGUI.TextureButton(GetPickColorBtnRect(headerRect), Assets.Textures.MoreOptionsTexture);
+            return QuickEditorGUI.TextureButton(GetPickColorBtnRect(headerRect), Assets.Textures.MoreOptionsTexture);
         }
 
         #region rects

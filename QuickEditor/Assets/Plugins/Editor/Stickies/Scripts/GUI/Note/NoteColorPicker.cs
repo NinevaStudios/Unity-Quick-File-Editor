@@ -18,7 +18,7 @@ namespace DeadMosquito.QuickEditor
         public void OnGUI(Rect rect, Colors.NoteColorCollection colors)
         {
             var colorPickerRect = new Rect(rect.x, rect.y, rect.width, ColorPickerHeaderHeight);
-            StickiesGUI.ColorRect(colorPickerRect, colors.header, Color.clear);
+            QuickEditorGUI.ColorRect(colorPickerRect, colors.header, Color.clear);
 
             var newColor = ColorChooser(colorPickerRect);
             if (newColor != NoteColor.None)
@@ -47,7 +47,7 @@ namespace DeadMosquito.QuickEditor
 
                 var noteColors = Colors.ColorById(color);
                 const float yOffset = colorBtnSize;
-                if (StickiesGUI.ColorButton(new Rect(x, rect.y + yOffset, colorBtnSize, colorBtnSize), noteColors.main,
+                if (QuickEditorGUI.ColorButton(new Rect(x, rect.y + yOffset, colorBtnSize, colorBtnSize), noteColors.main,
                     noteColors.chooserOutline))
                 {
                     return color;

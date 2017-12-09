@@ -4,7 +4,7 @@ using UnityEditor;
 
 namespace DeadMosquito.QuickEditor
 {
-    public static class StickiesGUI
+    public static class QuickEditorGUI
     {
         #region gui_elements
         public static bool EmptyButton(Rect rect)
@@ -157,12 +157,11 @@ namespace DeadMosquito.QuickEditor
         }
         #endregion
 
-        public static Rect GetProjectViewIconRect(Rect rect, Stickies.ViewType viewType)
+        public static Rect GetProjectViewIconRect(Rect rect)
         {
             const float offset = 1f;
             float iconSize = EditorGUIUtility.singleLineHeight - 2 * offset;
-            var offsetSetting = viewType == Stickies.ViewType.Project ? StickiesEditorSettings.OffsetInProjectView : StickiesEditorSettings.OffsetInHierarchyView;
-            var iconX = rect.x + rect.width - iconSize - offsetSetting;
+            var iconX = rect.x + rect.width - iconSize - StickiesEditorSettings.OffsetInProjectView;
             var iconRect = new Rect(iconX - offset, rect.y + offset, iconSize, iconSize);
             return iconRect;
         }

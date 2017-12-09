@@ -9,25 +9,18 @@ namespace DeadMosquito.QuickEditor
     public sealed class NoteTextArea : INoteGUIElement
     {
         readonly Action<string> _onTextUpdated;
-        readonly Func<bool> _isEnabledFunc;
 
         Vector2 _scroll = Vector2.zero;
         string _text = String.Empty;
 
-        public NoteTextArea(string initialText, Action<string> onTextUpdated, Func<bool> isEnabledFunc)
+        public NoteTextArea(string initialText, Action<string> onTextUpdated)
         {
             _text = initialText;
             _onTextUpdated = onTextUpdated;
-            _isEnabledFunc = isEnabledFunc;
         }
 
         public void OnGUI(Rect rect, Colors.NoteColorCollection colors)
         {
-            if (!_isEnabledFunc())
-            {
-                GUI.enabled = false;
-            }
-
             DrawNoteBackground(rect, colors.main);
 
             GUILayout.BeginArea(GetTextAreaRect(rect));
@@ -55,7 +48,7 @@ namespace DeadMosquito.QuickEditor
 
         void DrawNoteBackground(Rect rect, Color backgroundColor)
         {
-            StickiesGUI.ColorRect(rect, backgroundColor, Color.clear);
+            QuickEditorGUI.ColorRect(rect, backgroundColor, Color.clear);
         }
 
         static Rect GetTextAreaRect(Rect noteRect)

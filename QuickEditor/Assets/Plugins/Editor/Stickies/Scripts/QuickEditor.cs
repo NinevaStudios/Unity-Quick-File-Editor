@@ -5,27 +5,22 @@ using UnityEditor;
 namespace DeadMosquito.QuickEditor
 {
     [InitializeOnLoad]
-    public static class Stickies
+    public static class QuickEditor
     {
-        public enum ViewType
-        {
-            Project
-        }
-
-        static Stickies()
+        static QuickEditor()
         {
             EditorApplication.projectWindowItemOnGUI += AddEditIcon;
         }
 
         static void AddEditIcon(string guid, Rect selectionRect)
         {
-            AddEditButton(guid, selectionRect, ViewType.Project);
+            AddEditButton(guid, selectionRect);
             EditorApplication.RepaintProjectWindow();
         }
 
-        static void AddEditButton(string guid, Rect rect, ViewType viewType)
+        static void AddEditButton(string guid, Rect rect)
         {
-            var iconRect = StickiesGUI.GetProjectViewIconRect(rect, viewType);
+            var iconRect = QuickEditorGUI.GetProjectViewIconRect(rect);
 
             var isInFocus = rect.HasMouseInside();
             var isFile = FileUtils.IsFile(AssetDatabase.GUIDToAssetPath(guid));
@@ -40,11 +35,6 @@ namespace DeadMosquito.QuickEditor
         {
             if (GUI.Button(iconRect, string.Empty, GUI.skin.button))
             {
-                var guidToAssetPath = AssetDatabase.GUIDToAssetPath(guid);
-                if (FileUtils.IsFile(guidToAssetPath))
-                {
-                    Debug.Log(guidToAssetPath);
-                }
                 ShowEditor(iconRect, guid);
             }
             GUI.Label(iconRect, "E", Assets.Styles.PlusLabel);
@@ -52,12 +42,8 @@ namespace DeadMosquito.QuickEditor
 
         static void ShowEditor(Rect iconRect, string guid)
         {
-            PopupWindow.Show(iconRect, new StickyNoteContent(guid));
+            PopupWindow.Show(iconRect, new QuickEditorPopupWindowContent(guid));
         }
-
-        #region hierarchy
-
-        #endregion
     }
 }
 #endif
