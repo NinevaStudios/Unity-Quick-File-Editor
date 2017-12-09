@@ -29,7 +29,7 @@ namespace DeadMosquito.QuickEditor
 		{
 			if (DeleteButton(headerRect))
 			{
-				if (StickiesEditorSettings.ConfirmDeleting)
+				if (QuickEditorEditorSettings.ConfirmDeleting)
 				{
 					var confirmed = EditorUtility.DisplayDialog("Delete Note", "Do you really want to delete this note?\n\nThis action cannot be undone.",
 						"Delete", "Keep");

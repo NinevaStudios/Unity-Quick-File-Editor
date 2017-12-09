@@ -16,15 +16,19 @@ namespace DeadMosquito.QuickEditor
 
 			public static readonly GUISkin Skin;
 
-
 			static Styles()
 			{
+				var fontPath = Path.Combine(QuickEditorEditorSettings.StickiesHomeFolder, "Assets/SourceCodePro-Regular.ttf");
+				var font = AssetDatabase.LoadAssetAtPath<Font>(fontPath);
+				
 				TextArea = new GUIStyle(EditorStyles.textArea)
 				{
-					stretchHeight = true,
 					normal = {background = null, textColor = Color.black},
 					active = {background = null},
-					focused = {background = null}
+					focused = {background = null},
+					wordWrap = false,
+					richText = false,
+					font = font,
 				};
 				PlusLabel = new GUIStyle(EditorStyles.boldLabel)
 				{
@@ -37,8 +41,9 @@ namespace DeadMosquito.QuickEditor
 				BlackBoldText = EditorStyles.boldLabel;
 				BlackBoldText.normal.textColor = Color.black;
 
-				var skinPath = Path.Combine(StickiesEditorSettings.StickiesHomeFolder, "Assets/ScrollGUISkin.asset");
+				var skinPath = Path.Combine(QuickEditorEditorSettings.StickiesHomeFolder, "Assets/ScrollGUISkin.asset");
 				Skin = AssetDatabase.LoadAssetAtPath<GUISkin>(skinPath);
+
 				if (Skin == null)
 				{
 					Debug.LogError(
@@ -109,7 +114,7 @@ namespace DeadMosquito.QuickEditor
 			static string GetTexturePath(string name)
 			{
 				var relativePath = Path.Combine("Assets/GUI", name + ".png");
-				return Path.Combine(StickiesEditorSettings.StickiesHomeFolder, relativePath);
+				return Path.Combine(QuickEditorEditorSettings.StickiesHomeFolder, relativePath);
 			}
 		}
 	}

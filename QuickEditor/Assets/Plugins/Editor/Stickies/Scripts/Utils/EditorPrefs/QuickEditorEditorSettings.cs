@@ -5,20 +5,20 @@ namespace DeadMosquito.QuickEditor
 	using UnityEditor;
 	using UnityEngine;
 
-	public static class StickiesEditorSettings
+	public static class QuickEditorEditorSettings
 	{
-		public static EditorPrefsString StickiesHomeFolder =
+		public static readonly EditorPrefsString StickiesHomeFolder =
 			new EditorPrefsString("DeadMosquito.Stickies.StickiesHomeFolder." + ProjectName, "Location Folder",
 				"Assets/Plugins/Editor/Stickies");
 
-		public static EditorPrefsBool ConfirmDeleting =
+		public static readonly EditorPrefsBool ConfirmDeleting =
 			new EditorPrefsBool("DeadMosquito.Stickies.ConfirmDeleting." + ProjectName, "Confirm before deleting", true);
 
-		public static EditorPrefsIntSlider OffsetInProjectView =
+		public static readonly EditorPrefsIntSlider OffsetInProjectView =
 			new EditorPrefsIntSlider("DeadMosquito.Stickies.OffsetInProjectView." + ProjectName,
 				"Offset in Project View", 0, 0, 100);
 
-		public static EditorPrefsIntSlider FontSize =
+		public static readonly EditorPrefsIntSlider FontSize =
 			new EditorPrefsIntSlider("DeadMosquito.Stickies.FontSize." + ProjectName,
 				"Note Font Size", 10, 8, 32);
 
@@ -43,17 +43,6 @@ namespace DeadMosquito.QuickEditor
 			ConfirmDeleting.Draw();
 			OffsetInProjectView.Draw();
 			FontSize.Draw();
-
-			// hierarchy
-			GUILayout.Space(15f);
-			EditorGUILayout.LabelField("Experimental", EditorStyles.boldLabel);
-			EditorGUILayout.HelpBox(
-				"This feature is experimental, relies on reflection and therefore might slow down editor performance.",
-				MessageType.Warning);
-			EnableHierarchyStickies.Draw();
-			GUI.enabled = EnableHierarchyStickies;
-			OffsetInHierarchyView.Draw();
-			GUI.enabled = true;
 
 			GUILayout.FlexibleSpace();
 			EditorGUILayout.LabelField("Version 1.1.1", EditorStyles.miniLabel);
@@ -206,17 +195,6 @@ namespace DeadMosquito.QuickEditor
 				Value = EditorGUILayout.ColorField(Label, Value);
 			}
 		}
-
-		#region hierarchy
-
-		public static EditorPrefsBool EnableHierarchyStickies =
-			new EditorPrefsBool("DeadMosquito.Stickies.EnableHierarchyStickies." + ProjectName, "Enable Stickies for Hierarchy", true);
-
-		public static EditorPrefsIntSlider OffsetInHierarchyView =
-			new EditorPrefsIntSlider("DeadMosquito.Stickies.OffsetInHierarchyView." + ProjectName,
-				"Offset in Hierarchy View", 0, 0, 100);
-
-		#endregion
 	}
 }
 

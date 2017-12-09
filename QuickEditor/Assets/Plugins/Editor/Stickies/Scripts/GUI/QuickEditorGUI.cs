@@ -9,7 +9,7 @@
 		{
 			const float offset = 1f;
 			var iconSize = EditorGUIUtility.singleLineHeight - 2 * offset;
-			var iconX = rect.x + rect.width - iconSize - StickiesEditorSettings.OffsetInProjectView;
+			var iconX = rect.x + rect.width - iconSize - QuickEditorEditorSettings.OffsetInProjectView;
 			var iconRect = new Rect(iconX - offset, rect.y + offset, iconSize, iconSize);
 			return iconRect;
 		}

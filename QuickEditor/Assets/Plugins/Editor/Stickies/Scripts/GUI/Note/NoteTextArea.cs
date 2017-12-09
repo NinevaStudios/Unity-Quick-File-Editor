@@ -28,9 +28,9 @@ namespace DeadMosquito.QuickEditor
 
 			_scroll = EditorGUILayout.BeginScrollView(_scroll);
 			EditorGUI.BeginChangeCheck();
-			Assets.Styles.TextArea.fontSize = StickiesEditorSettings.FontSize;
-			Assets.Styles.TextArea.richText = true;
+			Assets.Styles.TextArea.fontSize = QuickEditorEditorSettings.FontSize;
 			_text = EditorGUILayout.TextArea(_text, Assets.Styles.TextArea);
+
 			if (EditorGUI.EndChangeCheck())
 			{
 				_onTextUpdated(_text);

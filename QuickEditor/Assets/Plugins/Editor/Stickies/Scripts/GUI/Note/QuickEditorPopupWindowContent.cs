@@ -1,12 +1,13 @@
 ﻿#if UNITY_EDITOR
 namespace DeadMosquito.QuickEditor
 {
+	using System.IO;
 	using UnityEditor;
 	using UnityEngine;
 
 	public class QuickEditorPopupWindowContent : PopupWindowContent
 	{
-		const float DefaultSize = 320f;
+		const float DefaultSize = 640f;
 
 		public override Vector2 GetWindowSize()
 		{
@@ -44,6 +45,7 @@ namespace DeadMosquito.QuickEditor
 
 		readonly string _guid;
 		NoteData _noteData;
+		const int CharacterLimit = 65000;
 
 		#endregion
 
@@ -52,14 +54,16 @@ namespace DeadMosquito.QuickEditor
 		public QuickEditorPopupWindowContent(string guid)
 		{
 			_guid = guid;
-			Init();
-			InitGui();
-		}
 
-		void InitGui()
-		{
+			var text = File.ReadAllText(AssetDatabase.GUIDToAssetPath(guid));
+			if (text.Length > CharacterLimit)
+			{
+				text = "File too large.";
+			}
+			
+			Init();
 			_headerGui = new NoteHeader(OnDelete);
-			_textArea = new NoteTextArea(_noteData.text, OnTextUpdated);
+			_textArea = new NoteTextArea(text, OnTextUpdated);
 		}
 
 
