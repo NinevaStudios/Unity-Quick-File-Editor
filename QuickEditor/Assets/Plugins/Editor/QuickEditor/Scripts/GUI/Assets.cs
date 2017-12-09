@@ -18,7 +18,7 @@ namespace DeadMosquito.QuickEditor
 
 			static Styles()
 			{
-				var fontPath = Path.Combine(QuickEditorEditorSettings.StickiesHomeFolder, "Assets/SourceCodePro-Regular.ttf");
+				var fontPath = Path.Combine(QuickEditorEditorSettings.QuickEditorHomeFolder, "Assets/SourceCodePro-Regular.ttf");
 				var font = AssetDatabase.LoadAssetAtPath<Font>(fontPath);
 				
 				TextArea = new GUIStyle(EditorStyles.textArea)
@@ -41,13 +41,13 @@ namespace DeadMosquito.QuickEditor
 				BlackBoldText = EditorStyles.boldLabel;
 				BlackBoldText.normal.textColor = Color.black;
 
-				var skinPath = Path.Combine(QuickEditorEditorSettings.StickiesHomeFolder, "Assets/ScrollGUISkin.asset");
+				var skinPath = Path.Combine(QuickEditorEditorSettings.QuickEditorHomeFolder, "Assets/ScrollGUISkin.asset");
 				Skin = AssetDatabase.LoadAssetAtPath<GUISkin>(skinPath);
 
 				if (Skin == null)
 				{
 					Debug.LogError(
-						"Could not load GUI skin. Did you move Stickies folder around in your project? Go to Preferences -> Stickies and update the location of Stickies folder");
+						"Could not load GUI skin. Did you move QuickEditor folder around in your project? Go to Preferences -> QuickEditor and update the location of QuickEditor folder");
 				}
 			}
 		}
@@ -114,7 +114,7 @@ namespace DeadMosquito.QuickEditor
 			static string GetTexturePath(string name)
 			{
 				var relativePath = Path.Combine("Assets/GUI", name + ".png");
-				return Path.Combine(QuickEditorEditorSettings.StickiesHomeFolder, relativePath);
+				return Path.Combine(QuickEditorEditorSettings.QuickEditorHomeFolder, relativePath);
 			}
 		}
 	}

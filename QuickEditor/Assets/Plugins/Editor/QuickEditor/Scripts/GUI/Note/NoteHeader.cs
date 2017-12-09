@@ -21,28 +21,15 @@ namespace DeadMosquito.QuickEditor
 			var headerRect = GetHeaderRect(rect);
 			QuickEditorGUI.ColorRect(headerRect, colors.header, Color.clear);
 
-			DrawDeleteButton(headerRect);
+			DrawSaveButton(headerRect);
 			DrawColorPickerButton(headerRect);
 		}
 
-		void DrawDeleteButton(Rect headerRect)
+		void DrawSaveButton(Rect headerRect)
 		{
 			if (DeleteButton(headerRect))
 			{
-				if (QuickEditorEditorSettings.ConfirmDeleting)
-				{
-					var confirmed = EditorUtility.DisplayDialog("Delete Note", "Do you really want to delete this note?\n\nThis action cannot be undone.",
-						"Delete", "Keep");
-					if (confirmed)
-					{
-						_onDeleteBtnClick();
-					}
-				}
-				else
-				{
-					// Delete immediately
-					_onDeleteBtnClick();
-				}
+
 			}
 		}
 

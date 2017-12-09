@@ -7,19 +7,16 @@ namespace DeadMosquito.QuickEditor
 
 	public static class QuickEditorEditorSettings
 	{
-		public static readonly EditorPrefsString StickiesHomeFolder =
-			new EditorPrefsString("DeadMosquito.Stickies.StickiesHomeFolder." + ProjectName, "Location Folder",
-				"Assets/Plugins/Editor/Stickies");
-
-		public static readonly EditorPrefsBool ConfirmDeleting =
-			new EditorPrefsBool("DeadMosquito.Stickies.ConfirmDeleting." + ProjectName, "Confirm before deleting", true);
+		public static readonly EditorPrefsString QuickEditorHomeFolder =
+			new EditorPrefsString("DeadMosquito.QuickEditor.QuickEditorHomeFolder." + ProjectName, "Location Folder",
+				"Assets/Plugins/Editor/QuickEditor");
 
 		public static readonly EditorPrefsIntSlider OffsetInProjectView =
-			new EditorPrefsIntSlider("DeadMosquito.Stickies.OffsetInProjectView." + ProjectName,
+			new EditorPrefsIntSlider("DeadMosquito.QuickEditor.OffsetInProjectView." + ProjectName,
 				"Offset in Project View", 0, 0, 100);
 
 		public static readonly EditorPrefsIntSlider FontSize =
-			new EditorPrefsIntSlider("DeadMosquito.Stickies.FontSize." + ProjectName,
+			new EditorPrefsIntSlider("DeadMosquito.QuickEditor.FontSize." + ProjectName,
 				"Note Font Size", 10, 8, 32);
 
 		static string ProjectName
@@ -32,15 +29,14 @@ namespace DeadMosquito.QuickEditor
 			}
 		}
 
-		[PreferenceItem("Stickies")]
+		[PreferenceItem("QuickEditor")]
 		public static void EditorPreferences()
 		{
 			EditorGUILayout.HelpBox(
-				"Change this setting to new location of Stickies if you move the folder around in your project.",
+				"Change this setting to new location of QuickEditor if you move the folder around in your project.",
 				MessageType.Warning);
-			StickiesHomeFolder.Draw();
+			QuickEditorHomeFolder.Draw();
 			EditorGUILayout.Space();
-			ConfirmDeleting.Draw();
 			OffsetInProjectView.Draw();
 			FontSize.Draw();
 

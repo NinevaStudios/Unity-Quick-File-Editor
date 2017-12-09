@@ -16,9 +16,8 @@ namespace DeadMosquito.QuickEditor
 
 		public override void OnGUI(Rect rect)
 		{
-			var c = Colors.ColorById(_noteData.color);
+			var c = Colors.ColorById(NoteColor.Clean);
 			_textArea.OnGUI(rect, c);
-
 			_headerGui.OnGUI(rect, c);
 
 			editorWindow.Repaint();
@@ -26,7 +25,6 @@ namespace DeadMosquito.QuickEditor
 
 		void OnTextUpdated(string text)
 		{
-			_noteData.text = text;
 		}
 
 		void OnDelete()
@@ -36,15 +34,14 @@ namespace DeadMosquito.QuickEditor
 
 		#region gui_elements
 
-		INoteGUIElement _headerGui;
-		INoteGUIElement _textArea;
+		readonly INoteGUIElement _headerGui;
+		readonly INoteGUIElement _textArea;
 
 		#endregion
 
 		#region note_persisted_properties
 
 		readonly string _guid;
-		NoteData _noteData;
 		const int CharacterLimit = 65000;
 
 		#endregion
@@ -58,18 +55,11 @@ namespace DeadMosquito.QuickEditor
 			var text = File.ReadAllText(AssetDatabase.GUIDToAssetPath(guid));
 			if (text.Length > CharacterLimit)
 			{
-				text = "File too large.";
+				text = "This file is too large. Unfortunately Unity allows only 65K characters in the editor text area";
 			}
-			
-			Init();
+
 			_headerGui = new NoteHeader(OnDelete);
 			_textArea = new NoteTextArea(text, OnTextUpdated);
-		}
-
-
-		void Init()
-		{
-			_noteData = new NoteData(_guid);
 		}
 
 		#endregion
