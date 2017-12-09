@@ -2,7 +2,7 @@
 using System;
 using UnityEngine;
 
-namespace DeadMosquito.Stickies
+namespace DeadMosquito.QuickEditor
 {
     public sealed class NoteColorPicker : INoteGUIElement
     {

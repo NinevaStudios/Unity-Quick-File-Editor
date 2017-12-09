@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Text;
 
-namespace DeadMosquito.Stickies.BitStrap
+namespace DeadMosquito.QuickEditor.BitStrap
 {
     /// <summary>
     /// Bunch of utility extension methods to the generic List class.

@@ -2,7 +2,7 @@
 using System.Collections;
 using UnityEditor;
 
-namespace DeadMosquito.Stickies
+namespace DeadMosquito.QuickEditor
 {
     public static class StickiesGUI
     {

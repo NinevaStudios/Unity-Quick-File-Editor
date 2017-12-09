@@ -3,7 +3,7 @@ using System;
 using UnityEngine;
 using UnityEditor;
 
-namespace DeadMosquito.Stickies
+namespace DeadMosquito.QuickEditor
 {
     public sealed class NoteHeader : INoteGUIElement
     {

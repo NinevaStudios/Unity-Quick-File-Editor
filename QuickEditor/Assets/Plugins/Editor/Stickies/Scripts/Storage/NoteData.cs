@@ -1,7 +1,7 @@
 ﻿#if UNITY_EDITOR
 using System;
 
-namespace DeadMosquito.Stickies
+namespace DeadMosquito.QuickEditor
 {
     [Serializable]
     public class NoteData

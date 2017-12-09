@@ -2,7 +2,7 @@
 using UnityEngine;
 using UnityEditor;
 
-namespace DeadMosquito.Stickies
+namespace DeadMosquito.QuickEditor
 {
     [InitializeOnLoad]
     public static class Stickies
@@ -14,12 +14,10 @@ namespace DeadMosquito.Stickies
 
         static Stickies()
         {
-            EditorApplication.projectWindowItemOnGUI += AddRevealerIconToProjectView;
-            EditorApplication.hierarchyWindowChanged += RefreshHierarchy;
-            RefreshHierarchy();
+            EditorApplication.projectWindowItemOnGUI += AddEditIcon;
         }
 
-        static void AddRevealerIconToProjectView(string guid, Rect selectionRect)
+        static void AddEditIcon(string guid, Rect selectionRect)
         {
             AddEditButton(guid, selectionRect, ViewType.Project);
             EditorApplication.RepaintProjectWindow();
@@ -30,7 +28,9 @@ namespace DeadMosquito.Stickies
             var iconRect = StickiesGUI.GetProjectViewIconRect(rect, viewType);
 
             var isInFocus = rect.HasMouseInside();
-            if (isInFocus)
+            var isFile = FileUtils.IsFile(AssetDatabase.GUIDToAssetPath(guid));
+            
+            if (isInFocus && isFile)
             {
                 DrawEditButton(iconRect, guid);
             }
@@ -40,28 +40,22 @@ namespace DeadMosquito.Stickies
         {
             if (GUI.Button(iconRect, string.Empty, GUI.skin.button))
             {
-                ShowNote(iconRect, guid);
+                var guidToAssetPath = AssetDatabase.GUIDToAssetPath(guid);
+                if (FileUtils.IsFile(guidToAssetPath))
+                {
+                    Debug.Log(guidToAssetPath);
+                }
+                ShowEditor(iconRect, guid);
             }
             GUI.Label(iconRect, "E", Assets.Styles.PlusLabel);
         }
 
-        static void ShowNote(Rect iconRect, string guid)
+        static void ShowEditor(Rect iconRect, string guid)
         {
             PopupWindow.Show(iconRect, new StickyNoteContent(guid));
         }
 
         #region hierarchy
-
-        static void RefreshHierarchy()
-        {
-            if (!StickiesEditorSettings.EnableHierarchyStickies)
-            {
-                return;
-            }
-
-            HierarchyObjectIdTools.Refresh();
-        }
-
 
         #endregion
     }

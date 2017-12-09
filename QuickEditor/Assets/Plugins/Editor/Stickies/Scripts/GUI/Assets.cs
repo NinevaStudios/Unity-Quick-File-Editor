@@ -4,7 +4,7 @@ using System.IO;
 using UnityEngine;
 using UnityEditor;
 
-namespace DeadMosquito.Stickies
+namespace DeadMosquito.QuickEditor
 {
     public static class Assets
     {

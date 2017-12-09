@@ -1,7 +1,7 @@
 ﻿#if UNITY_EDITOR
 using UnityEngine;
 
-namespace DeadMosquito.Stickies
+namespace DeadMosquito.QuickEditor
 {
     public interface INoteGUIElement
     {

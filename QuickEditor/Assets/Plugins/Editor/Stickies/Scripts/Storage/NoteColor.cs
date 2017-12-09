@@ -1,5 +1,5 @@
 ﻿#if UNITY_EDITOR
-namespace DeadMosquito.Stickies
+namespace DeadMosquito.QuickEditor
 {
     public enum NoteColor
     {

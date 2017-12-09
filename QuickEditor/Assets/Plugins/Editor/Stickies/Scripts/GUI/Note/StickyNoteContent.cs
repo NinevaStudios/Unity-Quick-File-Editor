@@ -1,9 +1,8 @@
 ﻿#if UNITY_EDITOR
-using System;
 using UnityEngine;
 using UnityEditor;
 
-namespace DeadMosquito.Stickies
+namespace DeadMosquito.QuickEditor
 {
     public class StickyNoteContent : PopupWindowContent
     {
@@ -54,10 +53,6 @@ namespace DeadMosquito.Stickies
             _noteData = new NoteData(_guid);
         }
 
-        void LoadData()
-        {
-
-        }
         #endregion
 
         public override Vector2 GetWindowSize()
@@ -71,9 +66,13 @@ namespace DeadMosquito.Stickies
             _textArea.OnGUI(rect, c);
 
             if (IsInDefaultMode())
+            {
                 _headerGui.OnGUI(rect, c);
+            }
             if (_mode == Mode.ColorPicker)
+            {
                 _colorPicker.OnGUI(rect, c);
+            }
 
             editorWindow.Repaint();
         }

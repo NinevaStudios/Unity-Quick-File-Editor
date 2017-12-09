@@ -2,7 +2,7 @@
 using UnityEditor;
 using UnityEngine;
 
-namespace DeadMosquito.Stickies
+namespace DeadMosquito.QuickEditor
 {
     public static class ColorUtils
     {
