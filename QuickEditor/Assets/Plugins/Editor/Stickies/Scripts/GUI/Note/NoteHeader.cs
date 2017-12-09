@@ -1,86 +1,88 @@
 ﻿#if UNITY_EDITOR
-using System;
-using UnityEngine;
-using UnityEditor;
-
 namespace DeadMosquito.QuickEditor
 {
-    public sealed class NoteHeader : INoteGUIElement
-    {
-        public const float Height = 32f;
+	using System;
+	using UnityEditor;
+	using UnityEngine;
 
-        readonly Action _onDeleteBtnClick;
+	public sealed class NoteHeader : INoteGUIElement
+	{
+		public const float Height = 32f;
 
-        public NoteHeader(Action onDelete)
-        {
-            _onDeleteBtnClick = onDelete;
-        }
+		readonly Action _onDeleteBtnClick;
 
-        public void OnGUI(Rect rect, Colors.NoteColorCollection colors)
-        {
-            var headerRect = GetHeaderRect(rect);
-            QuickEditorGUI.ColorRect(headerRect, colors.header, Color.clear);
+		public NoteHeader(Action onDelete)
+		{
+			_onDeleteBtnClick = onDelete;
+		}
 
-            DrawDeleteButton(headerRect);
-            DrawColorPickerButton(headerRect);
-        }
+		public void OnGUI(Rect rect, Colors.NoteColorCollection colors)
+		{
+			var headerRect = GetHeaderRect(rect);
+			QuickEditorGUI.ColorRect(headerRect, colors.header, Color.clear);
 
-        void DrawDeleteButton(Rect headerRect)
-        {
-            if (DeleteButton(headerRect))
-            {
-                if (StickiesEditorSettings.ConfirmDeleting)
-                {
-                    bool confirmed = EditorUtility.DisplayDialog("Delete Note", "Do you really want to delete this note?\n\nThis action cannot be undone.",
-                        "Delete", "Keep");
-                    if (confirmed)
-                    {
-                        _onDeleteBtnClick();
-                    }
-                }
-                else
-                {
-                    // Delete immediately
-                    _onDeleteBtnClick();
-                }
-            }
-        }
+			DrawDeleteButton(headerRect);
+			DrawColorPickerButton(headerRect);
+		}
 
-        void DrawColorPickerButton(Rect headerRect)
-        {
-            if (ColorPickerButton(headerRect))
-            {
-            }
-        }
+		void DrawDeleteButton(Rect headerRect)
+		{
+			if (DeleteButton(headerRect))
+			{
+				if (StickiesEditorSettings.ConfirmDeleting)
+				{
+					var confirmed = EditorUtility.DisplayDialog("Delete Note", "Do you really want to delete this note?\n\nThis action cannot be undone.",
+						"Delete", "Keep");
+					if (confirmed)
+					{
+						_onDeleteBtnClick();
+					}
+				}
+				else
+				{
+					// Delete immediately
+					_onDeleteBtnClick();
+				}
+			}
+		}
 
-        static bool DeleteButton(Rect headerRect)
-        {
-            return QuickEditorGUI.TextureButton(GetDeleteBtnRect(headerRect), Assets.Textures.DeleteTexture);
-        }
+		void DrawColorPickerButton(Rect headerRect)
+		{
+			if (ColorPickerButton(headerRect))
+			{
+			}
+		}
 
-        static bool ColorPickerButton(Rect headerRect)
-        {
-            return QuickEditorGUI.TextureButton(GetPickColorBtnRect(headerRect), Assets.Textures.MoreOptionsTexture);
-        }
+		static bool DeleteButton(Rect headerRect)
+		{
+			return QuickEditorGUI.TextureButton(GetDeleteBtnRect(headerRect), Assets.Textures.DeleteTexture);
+		}
 
-        #region rects
-        static Rect GetHeaderRect(Rect noteRect)
-        {
-            var headerRect = new Rect(noteRect.x, noteRect.y, noteRect.width, Height);
-            return headerRect;
-        }
+		static bool ColorPickerButton(Rect headerRect)
+		{
+			return QuickEditorGUI.TextureButton(GetPickColorBtnRect(headerRect), Assets.Textures.MoreOptionsTexture);
+		}
 
-        static Rect GetDeleteBtnRect(Rect headerRect)
-        {
-            return new Rect(headerRect.width - headerRect.height, headerRect.y, headerRect.height, headerRect.height);
-        }
+		#region rects
 
-        static Rect GetPickColorBtnRect(Rect headerRect)
-        {
-            return new Rect(headerRect.width - headerRect.height * 2, headerRect.y, headerRect.height, headerRect.height);
-        }
-        #endregion
-    }
+		static Rect GetHeaderRect(Rect noteRect)
+		{
+			var headerRect = new Rect(noteRect.x, noteRect.y, noteRect.width, Height);
+			return headerRect;
+		}
+
+		static Rect GetDeleteBtnRect(Rect headerRect)
+		{
+			return new Rect(headerRect.width - headerRect.height, headerRect.y, headerRect.height, headerRect.height);
+		}
+
+		static Rect GetPickColorBtnRect(Rect headerRect)
+		{
+			return new Rect(headerRect.width - headerRect.height * 2, headerRect.y, headerRect.height, headerRect.height);
+		}
+
+		#endregion
+	}
 }
 
 #endif

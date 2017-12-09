@@ -1,49 +1,49 @@
 ﻿#if UNITY_EDITOR
-using UnityEngine;
-using UnityEditor;
-
 namespace DeadMosquito.QuickEditor
 {
-    [InitializeOnLoad]
-    public static class QuickEditor
-    {
-        static QuickEditor()
-        {
-            EditorApplication.projectWindowItemOnGUI += AddEditIcon;
-        }
+	using UnityEditor;
+	using UnityEngine;
 
-        static void AddEditIcon(string guid, Rect selectionRect)
-        {
-            AddEditButton(guid, selectionRect);
-            EditorApplication.RepaintProjectWindow();
-        }
+	[InitializeOnLoad]
+	public static class QuickEditor
+	{
+		static QuickEditor()
+		{
+			EditorApplication.projectWindowItemOnGUI += AddEditIcon;
+		}
 
-        static void AddEditButton(string guid, Rect rect)
-        {
-            var iconRect = QuickEditorGUI.GetProjectViewIconRect(rect);
+		static void AddEditIcon(string guid, Rect selectionRect)
+		{
+			AddEditButton(guid, selectionRect);
+			EditorApplication.RepaintProjectWindow();
+		}
 
-            var isInFocus = rect.HasMouseInside();
-            var isFile = FileUtils.IsFile(AssetDatabase.GUIDToAssetPath(guid));
-            
-            if (isInFocus && isFile)
-            {
-                DrawEditButton(iconRect, guid);
-            }
-        }
+		static void AddEditButton(string guid, Rect rect)
+		{
+			var iconRect = QuickEditorGUI.GetProjectViewIconRect(rect);
 
-        static void DrawEditButton(Rect iconRect, string guid)
-        {
-            if (GUI.Button(iconRect, string.Empty, GUI.skin.button))
-            {
-                ShowEditor(iconRect, guid);
-            }
-            GUI.Label(iconRect, "E", Assets.Styles.PlusLabel);
-        }
+			var isInFocus = rect.HasMouseInside();
+			var isFile = FileUtils.IsFile(AssetDatabase.GUIDToAssetPath(guid));
 
-        static void ShowEditor(Rect iconRect, string guid)
-        {
-            PopupWindow.Show(iconRect, new QuickEditorPopupWindowContent(guid));
-        }
-    }
+			if (isInFocus && isFile)
+			{
+				DrawEditButton(iconRect, guid);
+			}
+		}
+
+		static void DrawEditButton(Rect iconRect, string guid)
+		{
+			if (GUI.Button(iconRect, string.Empty, GUI.skin.button))
+			{
+				ShowEditor(iconRect, guid);
+			}
+			GUI.Label(iconRect, "E", Assets.Styles.PlusLabel);
+		}
+
+		static void ShowEditor(Rect iconRect, string guid)
+		{
+			PopupWindow.Show(iconRect, new QuickEditorPopupWindowContent(guid));
+		}
+	}
 }
 #endif

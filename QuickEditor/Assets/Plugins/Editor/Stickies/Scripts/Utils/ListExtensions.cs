@@ -1,177 +1,196 @@
-﻿using System.Collections.Generic;
-using System.Text;
-
-namespace DeadMosquito.QuickEditor.BitStrap
+﻿namespace DeadMosquito.QuickEditor.BitStrap
 {
+	using System;
+	using System.Collections.Generic;
+	using System.Text;
+
     /// <summary>
-    /// Bunch of utility extension methods to the generic List class.
-    /// These methods are intended to be System.Ling substitutes as they do not generate garbage.
+    ///     Bunch of utility extension methods to the generic List class.
+    ///     These methods are intended to be System.Ling substitutes as they do not generate garbage.
     /// </summary>
     public static class ListExtensions
-    {
-        public struct GCFreeEnumerator<T>
-        {
-            private List<T>.Enumerator enumerator;
+	{
+	    /// <summary>
+	    ///     Use this method to iterate a List in a foreach loop but with no garbage
+	    /// </summary>
+	    /// <example>
+	    ///     foreach( var element in myList.Each() )
+	    ///     {
+	    ///     // code goes here...
+	    ///     }
+	    /// </example>
+	    /// <typeparam name="K"></typeparam>
+	    /// <typeparam name="V"></typeparam>
+	    /// <param name="collection"></param>
+	    /// <returns></returns>
+	    public static GCFreeEnumerator<T> Each<T>(this List<T> collection)
+		{
+			return new GCFreeEnumerator<T>(collection);
+		}
 
-            public T Current
-            {
-                get { return enumerator.Current; }
-            }
+	    /// <summary>
+	    ///     Behaves like System.Linq.Count however it does not generate garbage.
+	    /// </summary>
+	    /// <typeparam name="T"></typeparam>
+	    /// <param name="collection"></param>
+	    /// <param name="predicate"></param>
+	    /// <returns></returns>
+	    public static int Count<T>(this List<T> collection, Predicate<T> predicate)
+		{
+			if (predicate == null)
+			{
+				return 0;
+			}
 
-            public GCFreeEnumerator(List<T> collection)
-            {
-                enumerator = collection.GetEnumerator();
-            }
+			var count = 0;
+			for (var i = 0; i < collection.Count; i++)
+			{
+				if (predicate(collection[i]))
+				{
+					count++;
+				}
+			}
 
-            public GCFreeEnumerator<T> GetEnumerator()
-            {
-                return this;
-            }
+			return count;
+		}
 
-            public bool MoveNext()
-            {
-                return enumerator.MoveNext();
-            }
-        }
+	    /// <summary>
+	    ///     Behaves like System.Linq.All however it does not generate garbage.
+	    /// </summary>
+	    /// <typeparam name="T"></typeparam>
+	    /// <param name="collection"></param>
+	    /// <param name="predicate"></param>
+	    /// <returns></returns>
+	    public static bool All<T>(this List<T> collection, Predicate<T> predicate)
+		{
+			if (predicate == null)
+			{
+				return false;
+			}
 
-        /// <summary>
-        /// Use this method to iterate a List in a foreach loop but with no garbage
-        /// </summary>
-        /// <example>
-        /// foreach( var element in myList.Each() )
-        /// {
-        ///     // code goes here...
-        /// }
-        /// </example>
-        /// <typeparam name="K"></typeparam>
-        /// <typeparam name="V"></typeparam>
-        /// <param name="collection"></param>
-        /// <returns></returns>
-        public static GCFreeEnumerator<T> Each<T>(this List<T> collection)
-        {
-            return new GCFreeEnumerator<T>(collection);
-        }
+			for (var i = 0; i < collection.Count; i++)
+			{
+				if (!predicate(collection[i]))
+				{
+					return false;
+				}
+			}
 
-        /// <summary>
-        /// Behaves like System.Linq.Count however it does not generate garbage.
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="collection"></param>
-        /// <param name="predicate"></param>
-        /// <returns></returns>
-        public static int Count<T>(this List<T> collection, System.Predicate<T> predicate)
-        {
-            if (predicate == null)
-                return 0;
+			return true;
+		}
 
-            int count = 0;
-            for (int i = 0; i < collection.Count; i++)
-            {
-                if (predicate(collection[i]))
-                    count++;
-            }
+	    /// <summary>
+	    ///     Behaves like System.Linq.Any however it does not generate garbage.
+	    /// </summary>
+	    /// <typeparam name="T"></typeparam>
+	    /// <param name="collection"></param>
+	    /// <param name="predicate"></param>
+	    /// <returns></returns>
+	    public static bool Any<T>(this List<T> collection, Predicate<T> predicate)
+		{
+			if (predicate == null)
+			{
+				return false;
+			}
 
-            return count;
-        }
+			for (var i = 0; i < collection.Count; i++)
+			{
+				if (predicate(collection[i]))
+				{
+					return true;
+				}
+			}
 
-        /// <summary>
-        /// Behaves like System.Linq.All however it does not generate garbage.
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="collection"></param>
-        /// <param name="predicate"></param>
-        /// <returns></returns>
-        public static bool All<T>(this List<T> collection, System.Predicate<T> predicate)
-        {
-            if (predicate == null)
-                return false;
+			return false;
+		}
 
-            for (int i = 0; i < collection.Count; i++)
-            {
-                if (!predicate(collection[i]))
-                    return false;
-            }
+	    /// <summary>
+	    ///     Behaves like System.Linq.FirstOrDefault however it does not generate garbage.
+	    /// </summary>
+	    /// <typeparam name="T"></typeparam>
+	    /// <param name="collection"></param>
+	    /// <returns></returns>
+	    public static T FirstOrDefault<T>(this List<T> collection)
+		{
+			return collection.Count > 0 ? collection[0] : default(T);
+		}
 
-            return true;
-        }
+	    /// <summary>
+	    ///     Behaves like System.Linq.FirstOrDefault however it does not generate garbage.
+	    /// </summary>
+	    /// <typeparam name="T"></typeparam>
+	    /// <param name="collection"></param>
+	    /// <param name="predicate"></param>
+	    /// <returns></returns>
+	    public static T FirstOrDefault<T>(this List<T> collection, Predicate<T> predicate)
+		{
+			for (var enumerator = collection.GetEnumerator(); enumerator.MoveNext();)
+			{
+				if (predicate(enumerator.Current))
+				{
+					return enumerator.Current;
+				}
+			}
 
-        /// <summary>
-        /// Behaves like System.Linq.Any however it does not generate garbage.
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="collection"></param>
-        /// <param name="predicate"></param>
-        /// <returns></returns>
-        public static bool Any<T>(this List<T> collection, System.Predicate<T> predicate)
-        {
-            if (predicate == null)
-                return false;
+			return default(T);
+		}
 
-            for (int i = 0; i < collection.Count; i++)
-            {
-                if (predicate(collection[i]))
-                    return true;
-            }
+	    /// <summary>
+	    ///     Pretty format a list as "[ e1, e2, e3, ..., en ]".
+	    /// </summary>
+	    /// <typeparam name="T"></typeparam>
+	    /// <param name="predicate"></param>
+	    /// <returns></returns>
+	    public static string ToStringFull<T>(this List<T> predicate)
+		{
+			if (predicate == null)
+			{
+				return "null";
+			}
+			if (predicate.Count <= 0)
+			{
+				return "[]";
+			}
 
-            return false;
-        }
+			var sb = new StringBuilder();
 
-        /// <summary>
-        /// Behaves like System.Linq.FirstOrDefault however it does not generate garbage.
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="collection"></param>
-        /// <returns></returns>
-        public static T FirstOrDefault<T>(this List<T> collection)
-        {
-            return collection.Count > 0 ? collection[0] : default( T );
-        }
+			sb.Append("[ ");
 
-        /// <summary>
-        /// Behaves like System.Linq.FirstOrDefault however it does not generate garbage.
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="collection"></param>
-        /// <param name="predicate"></param>
-        /// <returns></returns>
-        public static T FirstOrDefault<T>(this List<T> collection, System.Predicate<T> predicate)
-        {
-            for (var enumerator = collection.GetEnumerator(); enumerator.MoveNext();)
-            {
-                if (predicate(enumerator.Current))
-                    return enumerator.Current;
-            }
+			for (var i = 0; i < predicate.Count - 1; i++)
+			{
+				sb.Append(predicate[i]);
+				sb.Append(", ");
+			}
 
-            return default( T );
-        }
+			sb.Append(predicate[predicate.Count - 1]);
+			sb.Append(" ]");
 
-        /// <summary>
-        /// Pretty format a list as "[ e1, e2, e3, ..., en ]".
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="predicate"></param>
-        /// <returns></returns>
-        public static string ToStringFull<T>(this List<T> predicate)
-        {
-            if (predicate == null)
-                return "null";
-            if (predicate.Count <= 0)
-                return "[]";
+			return sb.ToString();
+		}
 
-            StringBuilder sb = new StringBuilder();
+		public struct GCFreeEnumerator<T>
+		{
+			List<T>.Enumerator enumerator;
 
-            sb.Append("[ ");
+			public T Current
+			{
+				get { return enumerator.Current; }
+			}
 
-            for (int i = 0; i < predicate.Count - 1; i++)
-            {
-                sb.Append(predicate[i].ToString());
-                sb.Append(", ");
-            }
+			public GCFreeEnumerator(List<T> collection)
+			{
+				enumerator = collection.GetEnumerator();
+			}
 
-            sb.Append(predicate[predicate.Count - 1].ToString());
-            sb.Append(" ]");
+			public GCFreeEnumerator<T> GetEnumerator()
+			{
+				return this;
+			}
 
-            return sb.ToString();
-        }
-    }
+			public bool MoveNext()
+			{
+				return enumerator.MoveNext();
+			}
+		}
+	}
 }

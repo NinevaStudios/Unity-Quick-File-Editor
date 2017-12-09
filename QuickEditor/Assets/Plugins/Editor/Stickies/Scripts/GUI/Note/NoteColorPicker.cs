@@ -1,62 +1,64 @@
 ﻿#if UNITY_EDITOR
-using System;
-using UnityEngine;
-
 namespace DeadMosquito.QuickEditor
 {
-    public sealed class NoteColorPicker : INoteGUIElement
-    {
-        const float ColorPickerHeaderHeight = 85f;
+	using System;
+	using UnityEngine;
 
-        readonly Action<NoteColor> _onColorSelected;
+	public sealed class NoteColorPicker : INoteGUIElement
+	{
+		const float ColorPickerHeaderHeight = 85f;
 
-        public NoteColorPicker(Action<NoteColor> onColorSelected)
-        {
-            _onColorSelected = onColorSelected;
-        }
+		readonly Action<NoteColor> _onColorSelected;
 
-        public void OnGUI(Rect rect, Colors.NoteColorCollection colors)
-        {
-            var colorPickerRect = new Rect(rect.x, rect.y, rect.width, ColorPickerHeaderHeight);
-            QuickEditorGUI.ColorRect(colorPickerRect, colors.header, Color.clear);
+		public NoteColorPicker(Action<NoteColor> onColorSelected)
+		{
+			_onColorSelected = onColorSelected;
+		}
 
-            var newColor = ColorChooser(colorPickerRect);
-            if (newColor != NoteColor.None)
-            {
-                _onColorSelected(newColor);
-            }
-        }
+		public void OnGUI(Rect rect, Colors.NoteColorCollection colors)
+		{
+			var colorPickerRect = new Rect(rect.x, rect.y, rect.width, ColorPickerHeaderHeight);
+			QuickEditorGUI.ColorRect(colorPickerRect, colors.header, Color.clear);
 
-        static NoteColor ColorChooser(Rect rect)
-        {
-            const float colorBtnSize = 32f;
-            const float halfBtnSize = colorBtnSize / 2f;
-            const float spacing = 7f;
+			var newColor = ColorChooser(colorPickerRect);
+			if (newColor != NoteColor.None)
+			{
+				_onColorSelected(newColor);
+			}
+		}
 
-            int N = Colors.Values.Length;
-            /* width = buttons + spacings + half-button */
-            float colorsRowWidth = N * colorBtnSize + (N - 1) * spacing;
+		static NoteColor ColorChooser(Rect rect)
+		{
+			const float colorBtnSize = 32f;
+			const float halfBtnSize = colorBtnSize / 2f;
+			const float spacing = 7f;
 
-            var x = (rect.width - colorsRowWidth) / 2f + halfBtnSize;
-            var colors = Colors.Values;
-            for (int i = 0; i < colors.Length; i++, x += (colorBtnSize + spacing))
-            {
-                var color = colors[i];
-                if (color == NoteColor.None)
-                    continue;
+			var N = Colors.Values.Length;
+			/* width = buttons + spacings + half-button */
+			var colorsRowWidth = N * colorBtnSize + (N - 1) * spacing;
 
-                var noteColors = Colors.ColorById(color);
-                const float yOffset = colorBtnSize;
-                if (QuickEditorGUI.ColorButton(new Rect(x, rect.y + yOffset, colorBtnSize, colorBtnSize), noteColors.main,
-                    noteColors.chooserOutline))
-                {
-                    return color;
-                }
-            }
+			var x = (rect.width - colorsRowWidth) / 2f + halfBtnSize;
+			var colors = Colors.Values;
+			for (var i = 0; i < colors.Length; i++, x += colorBtnSize + spacing)
+			{
+				var color = colors[i];
+				if (color == NoteColor.None)
+				{
+					continue;
+				}
 
-            return NoteColor.None;
-        }
-    }
+				var noteColors = Colors.ColorById(color);
+				const float yOffset = colorBtnSize;
+				if (QuickEditorGUI.ColorButton(new Rect(x, rect.y + yOffset, colorBtnSize, colorBtnSize), noteColors.main,
+					noteColors.chooserOutline))
+				{
+					return color;
+				}
+			}
+
+			return NoteColor.None;
+		}
+	}
 }
 
 #endif

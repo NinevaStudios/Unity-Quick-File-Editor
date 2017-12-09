@@ -1,180 +1,181 @@
-﻿using UnityEngine;
-using System.Collections;
-using UnityEditor;
-
-namespace DeadMosquito.QuickEditor
+﻿namespace DeadMosquito.QuickEditor
 {
-    public static class QuickEditorGUI
-    {
-        #region gui_elements
-        public static bool EmptyButton(Rect rect)
-        {
-            return GUI.Button(rect, GUIContent.none, GUIStyle.none);
-        }
+	using UnityEditor;
+	using UnityEngine;
 
-        public static void ColorRect(Rect rect, Color color, Color outline)
-        {
-            DrawSolidRectangleWithOutline(rect, color, outline);
-        }
+	public static class QuickEditorGUI
+	{
+		public static Rect GetProjectViewIconRect(Rect rect)
+		{
+			const float offset = 1f;
+			var iconSize = EditorGUIUtility.singleLineHeight - 2 * offset;
+			var iconX = rect.x + rect.width - iconSize - StickiesEditorSettings.OffsetInProjectView;
+			var iconRect = new Rect(iconX - offset, rect.y + offset, iconSize, iconSize);
+			return iconRect;
+		}
 
-        public static bool ColorButton(Rect rect, Color fill, Color outline, float outlineSize = 2f)
-        {
-            const float outlineSizeIdle = 1f;
+		public static void DrawSolidRectangleWithOutline(Rect rectangle, Color faceColor, Color outlineColor)
+		{
+			Handles.DrawSolidRectangleWithOutline(new Vector3[4]
+			{
+				new Vector3(rectangle.xMin, rectangle.yMin, 0.0f),
+				new Vector3(rectangle.xMax, rectangle.yMin, 0.0f),
+				new Vector3(rectangle.xMax, rectangle.yMax, 0.0f),
+				new Vector3(rectangle.xMin, rectangle.yMax, 0.0f)
+			}, faceColor, outlineColor);
+		}
 
-            var center = rect.center;
-            var innerFillRadius = rect.width / 2f;
+		#region gui_elements
 
-            var outlineRadiusIdle = innerFillRadius + outlineSizeIdle;
-            var outlineRadiusHover = innerFillRadius + outlineSize;
+		public static bool EmptyButton(Rect rect)
+		{
+			return GUI.Button(rect, GUIContent.none, GUIStyle.none);
+		}
 
-            bool clicked = false;
-            int controlId = GUIUtility.GetControlID(FocusType.Passive);
-            switch (Event.current.GetTypeForControl(controlId))
-            {
-                case EventType.Repaint:
-                {
-                    var outerRadius = rect.HasMouseInside() ? outlineRadiusHover : outlineRadiusIdle;
-                    DrawDisc(center, outerRadius, outline);
-                    DrawDisc(center, innerFillRadius, fill);
-                    if (GUIUtility.hotControl == controlId)
-                    {
-                        DrawDisc(center, innerFillRadius, Colors.Darken);
-                    }
-                    break;
-                }
-                case EventType.MouseDown:
-                {
-                    if (rect.HasMouseInside()
-                        && Event.current.button == 0
-                        && GUIUtility.hotControl == 0)
-                    {
-                        GUIUtility.hotControl = controlId;
-                    }
-                    break;
-                }
-                case EventType.MouseUp:
-                {
-                    if (GUIUtility.hotControl == controlId)
-                    {
-                        if (rect.HasMouseInside())
-                        {
-                            clicked = true;
-                        }
+		public static void ColorRect(Rect rect, Color color, Color outline)
+		{
+			DrawSolidRectangleWithOutline(rect, color, outline);
+		}
 
-                        GUIUtility.hotControl = 0;
-                    }
-                    break;
-                }
-            }
+		public static bool ColorButton(Rect rect, Color fill, Color outline, float outlineSize = 2f)
+		{
+			const float outlineSizeIdle = 1f;
 
-            if (Event.current.isMouse && GUIUtility.hotControl == controlId)
-            {
-                // Report that the data in the GUI has changed
-                GUI.changed = true;
+			var center = rect.center;
+			var innerFillRadius = rect.width / 2f;
 
-                // Mark event as 'used' so other controls don't respond to it, and to
-                // trigger an automatic repaint.
-                Event.current.Use();
-            }
+			var outlineRadiusIdle = innerFillRadius + outlineSizeIdle;
+			var outlineRadiusHover = innerFillRadius + outlineSize;
 
-            return clicked;
-        }
+			var clicked = false;
+			var controlId = GUIUtility.GetControlID(FocusType.Passive);
+			switch (Event.current.GetTypeForControl(controlId))
+			{
+				case EventType.Repaint:
+				{
+					var outerRadius = rect.HasMouseInside() ? outlineRadiusHover : outlineRadiusIdle;
+					DrawDisc(center, outerRadius, outline);
+					DrawDisc(center, innerFillRadius, fill);
+					if (GUIUtility.hotControl == controlId)
+					{
+						DrawDisc(center, innerFillRadius, Colors.Darken);
+					}
+					break;
+				}
+				case EventType.MouseDown:
+				{
+					if (rect.HasMouseInside()
+					    && Event.current.button == 0
+					    && GUIUtility.hotControl == 0)
+					{
+						GUIUtility.hotControl = controlId;
+					}
+					break;
+				}
+				case EventType.MouseUp:
+				{
+					if (GUIUtility.hotControl == controlId)
+					{
+						if (rect.HasMouseInside())
+						{
+							clicked = true;
+						}
 
-        public static bool TextureButton(Rect rect, Texture2D tex)
-        {
-            bool clicked = false;
-            int controlId = GUIUtility.GetControlID(FocusType.Passive);
+						GUIUtility.hotControl = 0;
+					}
+					break;
+				}
+			}
 
-            switch (Event.current.GetTypeForControl(controlId))
-            {
-                case EventType.Repaint:
-                {
-                    GUI.DrawTexture(rect, tex);
-                    if (rect.HasMouseInside())
-                    {
-                        ColorRect(rect, Colors.DarkenABit, Color.clear);
-                    }
-                    if (GUIUtility.hotControl == controlId)
-                    {
-                        ColorRect(rect, Colors.Darken, Color.clear);
-                    }
-                    break;
-                }
-                case EventType.MouseDown:
-                {
-                    if (rect.HasMouseInside()
-                        && Event.current.button == 0
-                        && GUIUtility.hotControl == 0)
-                    {
-                        GUIUtility.hotControl = controlId;
-                    }
-                    break;
-                }
-                case EventType.MouseUp:
-                {
-                    if (GUIUtility.hotControl == controlId)
-                    {
-                        if (rect.HasMouseInside())
-                        {
-                            clicked = true;
-                        }
+			if (Event.current.isMouse && GUIUtility.hotControl == controlId)
+			{
+				// Report that the data in the GUI has changed
+				GUI.changed = true;
 
-                        GUIUtility.hotControl = 0;
-                    }
-                    break;
-                }
-            }
+				// Mark event as 'used' so other controls don't respond to it, and to
+				// trigger an automatic repaint.
+				Event.current.Use();
+			}
 
-            if (Event.current.isMouse && GUIUtility.hotControl == controlId)
-            {
-                // Report that the data in the GUI has changed
-                GUI.changed = true;
+			return clicked;
+		}
 
-                // Mark event as 'used' so other controls don't respond to it, and to
-                // trigger an automatic repaint.
-                Event.current.Use();
-            }
+		public static bool TextureButton(Rect rect, Texture2D tex)
+		{
+			var clicked = false;
+			var controlId = GUIUtility.GetControlID(FocusType.Passive);
 
-            return clicked;
-        }
+			switch (Event.current.GetTypeForControl(controlId))
+			{
+				case EventType.Repaint:
+				{
+					GUI.DrawTexture(rect, tex);
+					if (rect.HasMouseInside())
+					{
+						ColorRect(rect, Colors.DarkenABit, Color.clear);
+					}
+					if (GUIUtility.hotControl == controlId)
+					{
+						ColorRect(rect, Colors.Darken, Color.clear);
+					}
+					break;
+				}
+				case EventType.MouseDown:
+				{
+					if (rect.HasMouseInside()
+					    && Event.current.button == 0
+					    && GUIUtility.hotControl == 0)
+					{
+						GUIUtility.hotControl = controlId;
+					}
+					break;
+				}
+				case EventType.MouseUp:
+				{
+					if (GUIUtility.hotControl == controlId)
+					{
+						if (rect.HasMouseInside())
+						{
+							clicked = true;
+						}
 
-        static void DrawDisc(Vector2 center, float radius, Color fill)
-        {
-            Handles.color = fill;
-            Handles.DrawSolidDisc(center, Vector3.forward, radius);
-        }
+						GUIUtility.hotControl = 0;
+					}
+					break;
+				}
+			}
 
-        // OnGUI an arc in the graph rect.
-        static void DrawArc(Vector2 center, float radius, float angle, Color fill)
-        {
-            var start = new Vector2(
-                -Mathf.Cos(Mathf.Deg2Rad * angle / 2f),
-                Mathf.Sin(Mathf.Deg2Rad * angle / 2f)
-            );
+			if (Event.current.isMouse && GUIUtility.hotControl == controlId)
+			{
+				// Report that the data in the GUI has changed
+				GUI.changed = true;
 
-            Handles.color = fill;
-            Handles.DrawSolidArc(center, Vector3.forward, start, angle, radius);
-        }
-        #endregion
+				// Mark event as 'used' so other controls don't respond to it, and to
+				// trigger an automatic repaint.
+				Event.current.Use();
+			}
 
-        public static Rect GetProjectViewIconRect(Rect rect)
-        {
-            const float offset = 1f;
-            float iconSize = EditorGUIUtility.singleLineHeight - 2 * offset;
-            var iconX = rect.x + rect.width - iconSize - StickiesEditorSettings.OffsetInProjectView;
-            var iconRect = new Rect(iconX - offset, rect.y + offset, iconSize, iconSize);
-            return iconRect;
-        }
+			return clicked;
+		}
 
-        public static void DrawSolidRectangleWithOutline(Rect rectangle, Color faceColor, Color outlineColor)
-        {
-            Handles.DrawSolidRectangleWithOutline(new Vector3[4]
-            {
-                new Vector3(rectangle.xMin, rectangle.yMin, 0.0f),
-                new Vector3(rectangle.xMax, rectangle.yMin, 0.0f),
-                new Vector3(rectangle.xMax, rectangle.yMax, 0.0f),
-                new Vector3(rectangle.xMin, rectangle.yMax, 0.0f)
-            }, faceColor, outlineColor);
-        }
-    }
+		static void DrawDisc(Vector2 center, float radius, Color fill)
+		{
+			Handles.color = fill;
+			Handles.DrawSolidDisc(center, Vector3.forward, radius);
+		}
+
+		// OnGUI an arc in the graph rect.
+		static void DrawArc(Vector2 center, float radius, float angle, Color fill)
+		{
+			var start = new Vector2(
+				-Mathf.Cos(Mathf.Deg2Rad * angle / 2f),
+				Mathf.Sin(Mathf.Deg2Rad * angle / 2f)
+			);
+
+			Handles.color = fill;
+			Handles.DrawSolidArc(center, Vector3.forward, start, angle, radius);
+		}
+
+		#endregion
+	}
 }

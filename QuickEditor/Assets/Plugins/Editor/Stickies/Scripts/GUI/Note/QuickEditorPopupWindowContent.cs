@@ -1,12 +1,37 @@
 ﻿#if UNITY_EDITOR
-using UnityEngine;
-using UnityEditor;
-
 namespace DeadMosquito.QuickEditor
 {
+	using UnityEditor;
+	using UnityEngine;
+
 	public class QuickEditorPopupWindowContent : PopupWindowContent
 	{
 		const float DefaultSize = 320f;
+
+		public override Vector2 GetWindowSize()
+		{
+			return new Vector2(DefaultSize, DefaultSize);
+		}
+
+		public override void OnGUI(Rect rect)
+		{
+			var c = Colors.ColorById(_noteData.color);
+			_textArea.OnGUI(rect, c);
+
+			_headerGui.OnGUI(rect, c);
+
+			editorWindow.Repaint();
+		}
+
+		void OnTextUpdated(string text)
+		{
+			_noteData.text = text;
+		}
+
+		void OnDelete()
+		{
+			editorWindow.Close();
+		}
 
 		#region gui_elements
 
@@ -44,31 +69,6 @@ namespace DeadMosquito.QuickEditor
 		}
 
 		#endregion
-
-		public override Vector2 GetWindowSize()
-		{
-			return new Vector2(DefaultSize, DefaultSize);
-		}
-
-		public override void OnGUI(Rect rect)
-		{
-			var c = Colors.ColorById(_noteData.color);
-			_textArea.OnGUI(rect, c);
-
-			_headerGui.OnGUI(rect, c);
-
-			editorWindow.Repaint();
-		}
-
-		void OnTextUpdated(string text)
-		{
-			_noteData.text = text;
-		}
-
-		void OnDelete()
-		{
-			editorWindow.Close();
-		}
 
 		#region callbacks
 

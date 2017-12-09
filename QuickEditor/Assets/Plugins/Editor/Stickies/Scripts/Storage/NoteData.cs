@@ -1,28 +1,28 @@
 ﻿#if UNITY_EDITOR
-using System;
-
 namespace DeadMosquito.QuickEditor
 {
-    [Serializable]
-    public class NoteData
-    {
-        public string guid;
-        public NoteColor color;
-        public string text;
+	using System;
 
-        public NoteData(NoteData other)
-        {
-            guid = other.guid;
-            color = other.color;
-            text = other.text;
-        }
+	[Serializable]
+	public class NoteData
+	{
+		public NoteColor color;
+		public string guid;
+		public string text;
 
-        public NoteData(string guid)
-        {
-            this.guid = guid;
-            color = NoteColor.Lemon;
-            text = string.Empty;
-        }
-    }
+		public NoteData(NoteData other)
+		{
+			guid = other.guid;
+			color = other.color;
+			text = other.text;
+		}
+
+		public NoteData(string guid)
+		{
+			this.guid = guid;
+			color = NoteColor.Lemon;
+			text = string.Empty;
+		}
+	}
 }
 #endif
