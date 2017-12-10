@@ -9,11 +9,13 @@ namespace DeadMosquito.QuickEditor
 	{
 		public const float Height = 32f;
 
-		readonly Action _onDeleteBtnClick;
+		readonly Action _onCloseBtnClick;
+		readonly Action _onSaveBtnClick;
 
-		public NoteHeader(Action onDelete)
+		public NoteHeader(Action onClose, Action onSave)
 		{
-			_onDeleteBtnClick = onDelete;
+			_onCloseBtnClick = onClose;
+			_onSaveBtnClick = onSave;
 		}
 
 		public void OnGUI(Rect rect, Colors.NoteColorCollection colors)
@@ -29,7 +31,7 @@ namespace DeadMosquito.QuickEditor
 		{
 			if (SaveButton(headerRect))
 			{
-
+				_onSaveBtnClick();
 			}
 		}
 
@@ -37,6 +39,7 @@ namespace DeadMosquito.QuickEditor
 		{
 			if (CloseButton(headerRect))
 			{
+				_onCloseBtnClick();
 			}
 		}
 

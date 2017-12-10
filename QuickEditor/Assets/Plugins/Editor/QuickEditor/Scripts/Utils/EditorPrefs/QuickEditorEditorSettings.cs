@@ -18,6 +18,14 @@ namespace DeadMosquito.QuickEditor
 		public static readonly EditorPrefsIntSlider FontSize =
 			new EditorPrefsIntSlider("DeadMosquito.QuickEditor.FontSize." + ProjectName,
 				"Note Font Size", 10, 8, 32);
+		
+		public static readonly EditorPrefsIntSlider WindowWidth =
+			new EditorPrefsIntSlider("DeadMosquito.QuickEditor.WindowWidth." + ProjectName,
+				"Editor window width", 10, 100, 2400);
+		
+		public static readonly EditorPrefsIntSlider WindowHeight =
+			new EditorPrefsIntSlider("DeadMosquito.QuickEditor.WindowHeight." + ProjectName,
+				"Editor window height", 10, 100, 2400);
 
 		static string ProjectName
 		{
@@ -39,6 +47,9 @@ namespace DeadMosquito.QuickEditor
 			EditorGUILayout.Space();
 			OffsetInProjectView.Draw();
 			FontSize.Draw();
+			EditorGUILayout.Space();
+			WindowWidth.Draw();
+			WindowHeight.Draw();
 
 			GUILayout.FlexibleSpace();
 			EditorGUILayout.LabelField("Version 1.1.1", EditorStyles.miniLabel);

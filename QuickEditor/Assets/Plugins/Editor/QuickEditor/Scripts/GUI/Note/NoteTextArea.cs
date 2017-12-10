@@ -10,9 +10,20 @@ namespace DeadMosquito.QuickEditor
 		readonly Action<string> _onTextUpdated;
 
 		Vector2 _scroll = Vector2.zero;
-		string _text = string.Empty;
+		string _text;
 
-		public NoteTextArea(string initialText, Action<string> onTextUpdated)
+
+		public static NoteTextArea CreateTooMuchText()
+		{
+			return new NoteTextArea("This file is too large. Unfortunately Unity allows only 65K characters in the editor text area", null);
+		}
+		
+		public static NoteTextArea Create(string initialText, Action<string> onTextUpdated)
+		{
+			return new NoteTextArea(initialText, onTextUpdated);
+		}
+
+		NoteTextArea(string initialText, Action<string> onTextUpdated)
 		{
 			_text = initialText;
 			_onTextUpdated = onTextUpdated;

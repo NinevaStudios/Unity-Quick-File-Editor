@@ -1,17 +1,39 @@
 ﻿#if UNITY_EDITOR
 namespace DeadMosquito.QuickEditor
 {
+	using System;
 	using System.IO;
 	using UnityEditor;
 	using UnityEngine;
 
 	public class QuickEditorPopupWindowContent : PopupWindowContent
 	{
-		const float DefaultSize = 320f;
+		const int CharacterLimit = 65000;
+		
+		readonly INoteGUIElement _headerGui;
+		readonly INoteGUIElement _textArea;
+		readonly string _filePath;
+
+		readonly string _originalText;
+		string _currentText = string.Empty;
+
+		public QuickEditorPopupWindowContent(string guid)
+		{
+			_filePath = AssetDatabase.GUIDToAssetPath(guid);
+			_originalText = File.ReadAllText(_filePath);
+			var isTooLarge = _originalText.Length > CharacterLimit;
+			if (isTooLarge)
+			{
+				_originalText = "This file is too large. Unfortunately Unity allows only 65K characters in the editor text area";
+			}
+
+			_headerGui = new NoteHeader(OnCloseButtonClick, OnSaveButtonClick);
+			_textArea = isTooLarge ? NoteTextArea.CreateTooMuchText() : NoteTextArea.Create(_originalText, OnTextUpdated);
+		}
 
 		public override Vector2 GetWindowSize()
 		{
-			return new Vector2(720, 400);
+			return new Vector2(QuickEditorEditorSettings.WindowWidth, QuickEditorEditorSettings.WindowHeight);
 		}
 
 		public override void OnGUI(Rect rect)
@@ -25,46 +47,20 @@ namespace DeadMosquito.QuickEditor
 
 		void OnTextUpdated(string text)
 		{
+			_currentText = text;
 		}
 
-		void OnDelete()
+		void OnCloseButtonClick()
 		{
 			editorWindow.Close();
 		}
 
-		#region gui_elements
-
-		readonly INoteGUIElement _headerGui;
-		readonly INoteGUIElement _textArea;
-
-		#endregion
-
-		#region note_persisted_properties
-
-		readonly string _guid;
-		const int CharacterLimit = 65000;
-
-		#endregion
-
-		#region init
-
-		public QuickEditorPopupWindowContent(string guid)
+		void OnSaveButtonClick()
 		{
-			_guid = guid;
-
-			var text = File.ReadAllText(AssetDatabase.GUIDToAssetPath(guid));
-			if (text.Length > CharacterLimit)
-			{
-				text = "This file is too large. Unfortunately Unity allows only 65K characters in the editor text area";
-			}
-
-			_headerGui = new NoteHeader(OnDelete);
-			_textArea = new NoteTextArea(text, OnTextUpdated);
+			editorWindow.Close();
+			File.WriteAllText(_filePath, _currentText);
+			AssetDatabase.Refresh();
 		}
-
-		#endregion
-
-		#region callbacks
 
 		public override void OnOpen()
 		{
@@ -73,8 +69,6 @@ namespace DeadMosquito.QuickEditor
 		public override void OnClose()
 		{
 		}
-
-		#endregion
 	}
 }
 
