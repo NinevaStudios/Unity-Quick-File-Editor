@@ -27,7 +27,7 @@ namespace DeadMosquito.QuickEditor
 
 		void DrawSaveButton(Rect headerRect)
 		{
-			if (DeleteButton(headerRect))
+			if (SaveButton(headerRect))
 			{
 
 			}
@@ -40,9 +40,9 @@ namespace DeadMosquito.QuickEditor
 			}
 		}
 
-		static bool DeleteButton(Rect headerRect)
+		static bool SaveButton(Rect headerRect)
 		{
-			return QuickEditorGUI.TextureButton(GetDeleteBtnRect(headerRect), Assets.Textures.DeleteTexture);
+			return QuickEditorGUI.TextureButton(GetDeleteBtnRect(headerRect), Assets.Textures.SaveTexture);
 		}
 
 		static bool ColorPickerButton(Rect headerRect)
