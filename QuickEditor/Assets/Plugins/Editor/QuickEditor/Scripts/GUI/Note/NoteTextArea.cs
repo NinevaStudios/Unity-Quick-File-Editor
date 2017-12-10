@@ -11,20 +11,21 @@ namespace DeadMosquito.QuickEditor
 
 		Vector2 _scroll = Vector2.zero;
 		string _text;
-
+		bool _isTooMuchText;
 
 		public static NoteTextArea CreateTooMuchText()
 		{
-			return new NoteTextArea("This file is too large. Unfortunately Unity allows only 65K characters in the editor text area", null);
+			return new NoteTextArea(true, "This file is too large. Unfortunately Unity allows only 65K characters in the editor text area", null);
 		}
 		
 		public static NoteTextArea Create(string initialText, Action<string> onTextUpdated)
 		{
-			return new NoteTextArea(initialText, onTextUpdated);
+			return new NoteTextArea(false, initialText, onTextUpdated);
 		}
 
-		NoteTextArea(string initialText, Action<string> onTextUpdated)
+		NoteTextArea(bool isTooMuchText, string initialText, Action<string> onTextUpdated)
 		{
+			_isTooMuchText = isTooMuchText;
 			_text = initialText;
 			_onTextUpdated = onTextUpdated;
 		}
@@ -32,6 +33,11 @@ namespace DeadMosquito.QuickEditor
 		public void OnGUI(Rect rect, Colors.NoteColorCollection colors)
 		{
 			DrawNoteBackground(rect, colors.main);
+
+			if (_isTooMuchText)
+			{
+				GUI.enabled = false;
+			}
 
 			GUILayout.BeginArea(GetTextAreaRect(rect));
 			EditorGUILayout.BeginVertical();

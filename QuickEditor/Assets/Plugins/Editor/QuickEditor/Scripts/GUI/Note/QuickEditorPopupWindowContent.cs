@@ -38,7 +38,7 @@ namespace DeadMosquito.QuickEditor
 
 		public override void OnGUI(Rect rect)
 		{
-			var c = Colors.ColorById(NoteColor.Clean);
+			var c = Colors.ColorById(QuickEditorEditorSettings.EditorColor);
 			_textArea.OnGUI(rect, c);
 			_headerGui.OnGUI(rect, c);
 

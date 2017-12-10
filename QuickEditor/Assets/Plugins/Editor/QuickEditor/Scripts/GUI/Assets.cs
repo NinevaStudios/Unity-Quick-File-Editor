@@ -95,7 +95,6 @@ namespace DeadMosquito.QuickEditor
 			{
 				_notes = new Dictionary<NoteColor, Texture2D>
 				{
-					{NoteColor.None, LemonNoteTexture},
 					{NoteColor.Lemon, LemonNoteTexture},
 					{NoteColor.Grass, GrassNoteTexture},
 					{NoteColor.SkyBlue, SkyBlueNoteTexture},

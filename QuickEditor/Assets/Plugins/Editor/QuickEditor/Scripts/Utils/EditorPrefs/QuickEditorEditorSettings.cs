@@ -21,11 +21,15 @@ namespace DeadMosquito.QuickEditor
 		
 		public static readonly EditorPrefsIntSlider WindowWidth =
 			new EditorPrefsIntSlider("DeadMosquito.QuickEditor.WindowWidth." + ProjectName,
-				"Editor window width", 10, 100, 2400);
+				"Window width", 10, 100, 2400);
 		
 		public static readonly EditorPrefsIntSlider WindowHeight =
 			new EditorPrefsIntSlider("DeadMosquito.QuickEditor.WindowHeight." + ProjectName,
-				"Editor window height", 10, 100, 2400);
+				"Window height", 10, 100, 2400);
+		
+		public static readonly EditorPrefsEnum EditorColor =
+			new EditorPrefsEnum("DeadMosquito.QuickEditor.EditorColor." + ProjectName,
+				"Editor window height", NoteColor.Clean);
 
 		static string ProjectName
 		{
@@ -50,6 +54,7 @@ namespace DeadMosquito.QuickEditor
 			EditorGUILayout.Space();
 			WindowWidth.Draw();
 			WindowHeight.Draw();
+			EditorColor.Draw();
 
 			GUILayout.FlexibleSpace();
 			EditorGUILayout.LabelField("Version 1.1.1", EditorStyles.miniLabel);
@@ -79,6 +84,25 @@ namespace DeadMosquito.QuickEditor
 			public static implicit operator T(EditorPrefsItem<T> s)
 			{
 				return s.Value;
+			}
+		}
+		
+		public class EditorPrefsEnum : EditorPrefsItem<NoteColor>
+		{
+			public EditorPrefsEnum(string key, string label, NoteColor defaultValue)
+				: base(key, label, defaultValue)
+			{
+			}
+
+			public override NoteColor Value
+			{
+				get { return (NoteColor) EditorPrefs.GetInt(Key, (int) DefaultValue); }
+				set { EditorPrefs.SetInt(Key, (int) value); }
+			}
+
+			public override void Draw()
+			{
+				Value = (NoteColor) EditorGUILayout.EnumPopup(Label, Value);
 			}
 		}
 

@@ -3,7 +3,6 @@ namespace DeadMosquito.QuickEditor
 {
 	public enum NoteColor
 	{
-		None = -1,
 		Lemon = 0,
 		Grass = 1,
 		SkyBlue = 2,
