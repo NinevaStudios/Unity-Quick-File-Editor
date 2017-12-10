@@ -22,7 +22,6 @@ namespace DeadMosquito.QuickEditor
 		{
 			DrawNoteBackground(rect, colors.main);
 
-						
 			GUILayout.BeginArea(GetTextAreaRect(rect));
 			EditorGUILayout.BeginVertical();
 			GUI.skin = Assets.Styles.Skin;
@@ -34,9 +33,6 @@ namespace DeadMosquito.QuickEditor
 
 			if (EditorGUI.EndChangeCheck())
 			{
-				Debug.Log("CHANGED");
-				Undo.CreateSnapshot();
-				Undo.RegisterSnapshot();
 				_onTextUpdated(_text);
 			}
 			EditorGUILayout.EndScrollView();

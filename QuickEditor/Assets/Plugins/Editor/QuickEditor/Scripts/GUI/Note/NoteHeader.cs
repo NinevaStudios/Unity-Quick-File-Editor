@@ -35,19 +35,19 @@ namespace DeadMosquito.QuickEditor
 
 		void DrawColorPickerButton(Rect headerRect)
 		{
-			if (ColorPickerButton(headerRect))
+			if (CloseButton(headerRect))
 			{
 			}
 		}
 
 		static bool SaveButton(Rect headerRect)
 		{
-			return QuickEditorGUI.TextureButton(GetDeleteBtnRect(headerRect), Assets.Textures.SaveTexture);
+			return QuickEditorGUI.TextureButton(GetCloseBtnRect(headerRect), Assets.Textures.SaveTexture, "Save changes and overwrite file");
 		}
 
-		static bool ColorPickerButton(Rect headerRect)
+		static bool CloseButton(Rect headerRect)
 		{
-			return QuickEditorGUI.TextureButton(GetPickColorBtnRect(headerRect), Assets.Textures.MoreOptionsTexture);
+			return QuickEditorGUI.TextureButton(GetPickColorBtnRect(headerRect), Assets.Textures.CloseTexture, "Close editor");
 		}
 
 		#region rects
@@ -58,14 +58,14 @@ namespace DeadMosquito.QuickEditor
 			return headerRect;
 		}
 
-		static Rect GetDeleteBtnRect(Rect headerRect)
+		static Rect GetCloseBtnRect(Rect headerRect)
 		{
 			return new Rect(headerRect.width - headerRect.height, headerRect.y, headerRect.height, headerRect.height);
 		}
 
 		static Rect GetPickColorBtnRect(Rect headerRect)
 		{
-			return new Rect(headerRect.width - headerRect.height * 2, headerRect.y, headerRect.height, headerRect.height);
+			return new Rect(0, headerRect.y, headerRect.height, headerRect.height);
 		}
 
 		#endregion

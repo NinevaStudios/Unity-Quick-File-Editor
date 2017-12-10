@@ -56,6 +56,7 @@ namespace DeadMosquito.QuickEditor
 		public static class Textures
 		{
 			public static readonly Texture2D DeleteTexture;
+			public static readonly Texture2D CloseTexture;
 			public static readonly Texture2D SaveTexture;
 			public static readonly Texture2D MoreOptionsTexture;
 
@@ -73,6 +74,7 @@ namespace DeadMosquito.QuickEditor
 			static Textures()
 			{
 				DeleteTexture = GetTexture("ic_delete");
+				CloseTexture = GetTexture("ic_close");
 				SaveTexture = GetTexture("ic_save");
 				MoreOptionsTexture = GetTexture("ic_color_picker");
 

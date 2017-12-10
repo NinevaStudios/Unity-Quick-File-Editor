@@ -14,9 +14,9 @@
 			return iconRect;
 		}
 
-		public static void DrawSolidRectangleWithOutline(Rect rectangle, Color faceColor, Color outlineColor)
+		static void DrawSolidRectangleWithOutline(Rect rectangle, Color faceColor, Color outlineColor)
 		{
-			Handles.DrawSolidRectangleWithOutline(new Vector3[4]
+			Handles.DrawSolidRectangleWithOutline(new[]
 			{
 				new Vector3(rectangle.xMin, rectangle.yMin, 0.0f),
 				new Vector3(rectangle.xMax, rectangle.yMin, 0.0f),
@@ -100,7 +100,7 @@
 			return clicked;
 		}
 
-		public static bool TextureButton(Rect rect, Texture2D tex)
+		public static bool TextureButton(Rect rect, Texture2D tex, string tooltip)
 		{
 			var clicked = false;
 			var controlId = GUIUtility.GetControlID(FocusType.Passive);
@@ -113,6 +113,7 @@
 					if (rect.HasMouseInside())
 					{
 						ColorRect(rect, Colors.DarkenABit, Color.clear);
+						GUI.Label(rect, new GUIContent("", tooltip));
 					}
 					if (GUIUtility.hotControl == controlId)
 					{
