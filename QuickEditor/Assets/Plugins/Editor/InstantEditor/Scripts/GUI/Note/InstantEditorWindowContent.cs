@@ -23,9 +23,14 @@ namespace DeadMosquito.InstantEditor
 			_currentText = _originalText;
 
 			var isTooLarge = _originalText.Length > CharacterLimit;
+			if (isTooLarge)
+			{
+				_originalText = _originalText.Substring(0, CharacterLimit);
+				_originalText += "\n...\n\n<...etc...>";
+			}
 
 			_header = new NoteHeader(isTooLarge, Path.GetFileName(_filePath), OnCloseButtonClick, OnSaveButtonClick, OnRestoreButtonClick);
-			_textArea = isTooLarge ? NoteTextArea.CreateTooMuchText() : NoteTextArea.Create(_originalText, OnTextUpdated);
+			_textArea = isTooLarge ? NoteTextArea.CreateTooMuchText(_originalText) : NoteTextArea.Create(_originalText, OnTextUpdated);
 		}
 
 		public override Vector2 GetWindowSize()

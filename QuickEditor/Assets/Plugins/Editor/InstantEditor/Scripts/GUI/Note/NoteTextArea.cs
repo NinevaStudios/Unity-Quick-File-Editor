@@ -18,9 +18,9 @@ namespace DeadMosquito.InstantEditor
 			set { _text = value; }
 		}
 
-		public static NoteTextArea CreateTooMuchText()
+		public static NoteTextArea CreateTooMuchText(string croppedText)
 		{
-			return new NoteTextArea(true, "This file is too large. Unfortunately Unity allows only 16K characters in the editor text area", null);
+			return new NoteTextArea(true, croppedText, null);
 		}
 
 		public static NoteTextArea Create(string initialText, Action<string> onTextUpdated)
@@ -39,10 +39,6 @@ namespace DeadMosquito.InstantEditor
 		{
 			DrawNoteBackground(rect, colors.main);
 
-			if (_isTooMuchText)
-			{
-				GUI.enabled = false;
-			}
 
 			GUILayout.BeginArea(GetTextAreaRect(rect));
 			EditorGUILayout.BeginVertical();
@@ -50,9 +46,13 @@ namespace DeadMosquito.InstantEditor
 
 			_scroll = EditorGUILayout.BeginScrollView(_scroll);
 			EditorGUI.BeginChangeCheck();
-			var textAreaTextStyle = _isTooMuchText ? Assets.Styles.TooBigMessageText : Assets.Styles.TextArea;
-			textAreaTextStyle.fontSize = InstantEditorEditorSettings.FontSize;
-			_text = EditorGUILayout.TextArea(_text, textAreaTextStyle);
+			
+			if (_isTooMuchText)
+			{
+				GUI.enabled = false;
+			}
+			Assets.Styles.TextArea.fontSize = InstantEditorEditorSettings.FontSize;
+			_text = EditorGUILayout.TextArea(_text, Assets.Styles.TextArea);
 
 			if (EditorGUI.EndChangeCheck())
 			{

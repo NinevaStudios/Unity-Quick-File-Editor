@@ -46,7 +46,8 @@ namespace DeadMosquito.InstantEditor
 					alignment = TextAnchor.MiddleCenter,
 					stretchHeight = true,
 					stretchWidth = true, 
-					fixedHeight = NoteHeader.Height
+					fixedHeight = NoteHeader.Height,
+					wordWrap = true
 				};
 				PlusLabel = new GUIStyle(EditorStyles.boldLabel)
 				{

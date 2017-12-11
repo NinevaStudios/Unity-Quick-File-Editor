@@ -7,6 +7,7 @@ namespace DeadMosquito.InstantEditor
 
 	public sealed class NoteHeader
 	{
+		public const string TooMuchTextMessage = "This file is too large to be quick-edited.";
 		public const float Height = 32f;
 
 		readonly Action _onCloseBtnClick;
@@ -14,6 +15,7 @@ namespace DeadMosquito.InstantEditor
 		readonly Action _onRestore;
 		readonly bool _isFileTooBig;
 		readonly string _title;
+
 
 		public NoteHeader(bool isFileTooBig, string title, Action onClose, Action onSave, Action onRestore)
 		{
@@ -28,8 +30,8 @@ namespace DeadMosquito.InstantEditor
 		{
 			var headerRect = GetHeaderRect(rect);
 			GUIUtils.ColorRect(headerRect, colors.header, Color.clear);
-			
-			EditorGUILayout.LabelField(_title, Assets.Styles.HeaderFileNameText);
+
+			EditorGUILayout.LabelField(_isFileTooBig ? TooMuchTextMessage : _title, Assets.Styles.HeaderFileNameText);
 
 			if (!_isFileTooBig)
 			{
@@ -100,7 +102,7 @@ namespace DeadMosquito.InstantEditor
 		{
 			return new Rect(headerRect.width - 2 * headerRect.height, headerRect.y, headerRect.height, headerRect.height);
 		}
-		
+
 		static Rect GetTitleRect(Rect headerRect)
 		{
 			return headerRect;
