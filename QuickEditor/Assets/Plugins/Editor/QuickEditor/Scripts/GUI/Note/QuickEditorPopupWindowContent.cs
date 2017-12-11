@@ -1,7 +1,6 @@
 ﻿#if UNITY_EDITOR
 namespace DeadMosquito.QuickEditor
 {
-	using System;
 	using System.IO;
 	using UnityEditor;
 	using UnityEngine;
@@ -59,6 +58,8 @@ namespace DeadMosquito.QuickEditor
 
 		void OnRestoreButtonClick()
 		{
+			GUIUtility.keyboardControl = 0; // remove focus from text field
+			
 			_currentText = _originalText;
 			_textArea.Text = _currentText;
 		}
