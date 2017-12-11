@@ -21,15 +21,15 @@ namespace DeadMosquito.InstantEditor
 		
 		public static readonly EditorPrefsIntSlider WindowWidth =
 			new EditorPrefsIntSlider("DeadMosquito.InstantEditor.WindowWidth." + ProjectName,
-				"Window width", 10, 320, 2400);
+				"Window width", 1024, 320, 2400);
 		
 		public static readonly EditorPrefsIntSlider WindowHeight =
 			new EditorPrefsIntSlider("DeadMosquito.InstantEditor.WindowHeight." + ProjectName,
-				"Window height", 10, 240, 2400);
+				"Window height", 768, 240, 2400);
 		
 		public static readonly EditorPrefsEnum EditorColor =
 			new EditorPrefsEnum("DeadMosquito.InstantEditor.EditorColor." + ProjectName,
-				"Editor window height", NoteColor.Clean);
+				"Background color", NoteColor.Clean);
 
 		static string ProjectName
 		{
