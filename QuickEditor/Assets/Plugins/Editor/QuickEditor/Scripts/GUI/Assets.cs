@@ -29,6 +29,8 @@ namespace DeadMosquito.QuickEditor
 					wordWrap = false,
 					richText = false,
 					font = font,
+					stretchHeight = true,
+					stretchWidth = true
 				};
 				PlusLabel = new GUIStyle(EditorStyles.boldLabel)
 				{
@@ -57,11 +59,13 @@ namespace DeadMosquito.QuickEditor
 		public static class Textures
 		{
 			public static readonly Texture2D CloseTexture;
+			public static readonly Texture2D RestoreTexture;
 			public static readonly Texture2D SaveTexture;
 
 			static Textures()
 			{
 				CloseTexture = GetTexture("ic_close");
+				RestoreTexture = GetTexture("ic_restore");
 				SaveTexture = GetTexture("ic_save");
 			}
 

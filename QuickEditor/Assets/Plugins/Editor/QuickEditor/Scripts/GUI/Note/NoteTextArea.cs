@@ -5,13 +5,18 @@ namespace DeadMosquito.QuickEditor
 	using UnityEditor;
 	using UnityEngine;
 
-	public sealed class NoteTextArea : INoteGUIElement
+	public sealed class NoteTextArea
 	{
 		readonly Action<string> _onTextUpdated;
 
 		Vector2 _scroll = Vector2.zero;
+		readonly bool _isTooMuchText;
 		string _text;
-		bool _isTooMuchText;
+		
+		public string Text
+		{
+			set { _text = value; }
+		}
 
 		public static NoteTextArea CreateTooMuchText()
 		{
