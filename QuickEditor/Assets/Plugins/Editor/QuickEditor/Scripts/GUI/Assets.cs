@@ -12,7 +12,7 @@ namespace DeadMosquito.QuickEditor
 		{
 			public static readonly GUIStyle TextArea;
 			public static readonly GUIStyle PlusLabel;
-			public static readonly GUIStyle BlackBoldText;
+			public static readonly GUIStyle TooBigMessageText;
 
 			public static readonly GUISkin Skin;
 
@@ -20,7 +20,7 @@ namespace DeadMosquito.QuickEditor
 			{
 				var fontPath = Path.Combine(QuickEditorEditorSettings.QuickEditorHomeFolder, "Assets/SourceCodePro-Regular.ttf");
 				var font = AssetDatabase.LoadAssetAtPath<Font>(fontPath);
-				
+
 				TextArea = new GUIStyle(EditorStyles.textArea)
 				{
 					normal = {background = null, textColor = Color.black},
@@ -38,8 +38,10 @@ namespace DeadMosquito.QuickEditor
 					stretchHeight = true,
 					stretchWidth = true
 				};
-				BlackBoldText = EditorStyles.boldLabel;
-				BlackBoldText.normal.textColor = Color.black;
+				TooBigMessageText = EditorStyles.boldLabel;
+				TooBigMessageText.normal.textColor = Color.black;
+				TooBigMessageText.alignment = TextAnchor.MiddleCenter;
+				TooBigMessageText.stretchHeight = true;
 
 				var skinPath = Path.Combine(QuickEditorEditorSettings.QuickEditorHomeFolder, "Assets/ScrollGUISkin.asset");
 				Skin = AssetDatabase.LoadAssetAtPath<GUISkin>(skinPath);
@@ -52,23 +54,15 @@ namespace DeadMosquito.QuickEditor
 			}
 		}
 
-
 		public static class Textures
 		{
-			public static readonly Texture2D DeleteTexture;
 			public static readonly Texture2D CloseTexture;
 			public static readonly Texture2D SaveTexture;
-			public static readonly Texture2D MoreOptionsTexture;
-
-
-			static Dictionary<NoteColor, Texture2D> _notes;
 
 			static Textures()
 			{
-				DeleteTexture = GetTexture("ic_delete");
 				CloseTexture = GetTexture("ic_close");
 				SaveTexture = GetTexture("ic_save");
-				MoreOptionsTexture = GetTexture("ic_color_picker");
 			}
 
 			static Texture2D GetTexture(string name)
