@@ -20,7 +20,7 @@ namespace DeadMosquito.InstantEditor
 
 		public static NoteTextArea CreateTooMuchText()
 		{
-			return new NoteTextArea(true, "This file is too large. Unfortunately Unity allows only 65K characters in the editor text area", null);
+			return new NoteTextArea(true, "This file is too large. Unfortunately Unity allows only 16K characters in the editor text area", null);
 		}
 
 		public static NoteTextArea Create(string initialText, Action<string> onTextUpdated)

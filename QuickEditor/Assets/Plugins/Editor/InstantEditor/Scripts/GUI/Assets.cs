@@ -18,6 +18,15 @@ namespace DeadMosquito.InstantEditor
 
 			static Styles()
 			{
+				var skinPath = Path.Combine(InstantEditorEditorSettings.InstantEditorHomeFolder, "Assets/ScrollGUISkin.asset");
+				Skin = AssetDatabase.LoadAssetAtPath<GUISkin>(skinPath);
+
+				if (Skin == null)
+				{
+					Debug.LogError(
+						"Could not load GUI skin. Did you move InstantEditor folder around in your project? Go to Preferences -> InstantEditor and update the location of InstantEditor folder");
+				}
+				
 				var fontPath = Path.Combine(InstantEditorEditorSettings.InstantEditorHomeFolder, "Assets/SourceCodePro-Regular.ttf");
 				var font = AssetDatabase.LoadAssetAtPath<Font>(fontPath);
 
@@ -51,15 +60,6 @@ namespace DeadMosquito.InstantEditor
 				TooBigMessageText.normal.textColor = Color.black;
 				TooBigMessageText.alignment = TextAnchor.MiddleCenter;
 				TooBigMessageText.stretchHeight = true;
-
-				var skinPath = Path.Combine(InstantEditorEditorSettings.InstantEditorHomeFolder, "Assets/ScrollGUISkin.asset");
-				Skin = AssetDatabase.LoadAssetAtPath<GUISkin>(skinPath);
-
-				if (Skin == null)
-				{
-					Debug.LogError(
-						"Could not load GUI skin. Did you move InstantEditor folder around in your project? Go to Preferences -> InstantEditor and update the location of InstantEditor folder");
-				}
 			}
 		}
 
