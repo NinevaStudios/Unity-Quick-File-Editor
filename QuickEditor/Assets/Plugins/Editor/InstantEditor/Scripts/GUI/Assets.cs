@@ -58,7 +58,7 @@ namespace DeadMosquito.InstantEditor
 				if (Skin == null)
 				{
 					Debug.LogError(
-						"Could not load GUI skin. Did you move QuickEditor folder around in your project? Go to Preferences -> QuickEditor and update the location of QuickEditor folder");
+						"Could not load GUI skin. Did you move InstantEditor folder around in your project? Go to Preferences -> InstantEditor and update the location of InstantEditor folder");
 				}
 			}
 		}
