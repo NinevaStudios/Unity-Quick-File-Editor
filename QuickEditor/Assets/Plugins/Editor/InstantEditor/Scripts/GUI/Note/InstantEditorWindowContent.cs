@@ -1,11 +1,11 @@
 ﻿#if UNITY_EDITOR
-namespace DeadMosquito.QuickEditor
+namespace DeadMosquito.InstantEditor
 {
 	using System.IO;
 	using UnityEditor;
 	using UnityEngine;
 
-	public class QuickEditorPopupWindowContent : PopupWindowContent
+	public class InstantEditorWindowContent : PopupWindowContent
 	{
 		const int CharacterLimit = 65000;
 
@@ -16,7 +16,7 @@ namespace DeadMosquito.QuickEditor
 		readonly string _originalText;
 		string _currentText;
 
-		public QuickEditorPopupWindowContent(string guid)
+		public InstantEditorWindowContent(string guid)
 		{
 			_filePath = AssetDatabase.GUIDToAssetPath(guid);
 			_originalText = File.ReadAllText(_filePath);
@@ -34,12 +34,12 @@ namespace DeadMosquito.QuickEditor
 
 		public override Vector2 GetWindowSize()
 		{
-			return new Vector2(QuickEditorEditorSettings.WindowWidth, QuickEditorEditorSettings.WindowHeight);
+			return new Vector2(InstantEditorEditorSettings.WindowWidth, InstantEditorEditorSettings.WindowHeight);
 		}
 
 		public override void OnGUI(Rect rect)
 		{
-			var c = Colors.ColorById(QuickEditorEditorSettings.EditorColor);
+			var c = Colors.ColorById(InstantEditorEditorSettings.EditorColor);
 			_textArea.OnGUI(rect, c);
 			_header.OnGUI(rect, c);
 

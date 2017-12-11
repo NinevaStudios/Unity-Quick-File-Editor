@@ -1,15 +1,15 @@
-﻿namespace DeadMosquito.QuickEditor
+﻿namespace DeadMosquito.InstantEditor
 {
 	using UnityEditor;
 	using UnityEngine;
 
-	public static class QuickEditorGUI
+	public static class GUIUtils
 	{
 		public static Rect GetProjectViewIconRect(Rect rect)
 		{
 			const float offset = 1f;
 			var iconSize = EditorGUIUtility.singleLineHeight - 2 * offset;
-			var iconX = rect.x + rect.width - iconSize - QuickEditorEditorSettings.OffsetInProjectView;
+			var iconX = rect.x + rect.width - iconSize - InstantEditorEditorSettings.OffsetInProjectView;
 			var iconRect = new Rect(iconX - offset, rect.y + offset, iconSize, iconSize);
 			return iconRect;
 		}

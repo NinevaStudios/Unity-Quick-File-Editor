@@ -1,34 +1,34 @@
 ﻿#if UNITY_EDITOR
-namespace DeadMosquito.QuickEditor
+namespace DeadMosquito.InstantEditor
 {
 	using System;
 	using UnityEditor;
 	using UnityEngine;
 
-	public static class QuickEditorEditorSettings
+	public static class InstantEditorEditorSettings
 	{
-		public static readonly EditorPrefsString QuickEditorHomeFolder =
-			new EditorPrefsString("DeadMosquito.QuickEditor.QuickEditorHomeFolder." + ProjectName, "Location Folder",
-				"Assets/Plugins/Editor/QuickEditor");
+		public static readonly EditorPrefsString InstantEditorHomeFolder =
+			new EditorPrefsString("DeadMosquito.InstantEditor.InstantEditorHomeFolder." + ProjectName, "Location Folder",
+				"Assets/Plugins/Editor/InstantEditor");
 
 		public static readonly EditorPrefsIntSlider OffsetInProjectView =
-			new EditorPrefsIntSlider("DeadMosquito.QuickEditor.OffsetInProjectView." + ProjectName,
+			new EditorPrefsIntSlider("DeadMosquito.InstantEditor.OffsetInProjectView." + ProjectName,
 				"Offset in Project View", 0, 0, 100);
 
 		public static readonly EditorPrefsIntSlider FontSize =
-			new EditorPrefsIntSlider("DeadMosquito.QuickEditor.FontSize." + ProjectName,
-				"Note Font Size", 10, 8, 32);
+			new EditorPrefsIntSlider("DeadMosquito.InstantEditor.FontSize." + ProjectName,
+				"Note Font Size", 12, 8, 32);
 		
 		public static readonly EditorPrefsIntSlider WindowWidth =
-			new EditorPrefsIntSlider("DeadMosquito.QuickEditor.WindowWidth." + ProjectName,
-				"Window width", 10, 100, 2400);
+			new EditorPrefsIntSlider("DeadMosquito.InstantEditor.WindowWidth." + ProjectName,
+				"Window width", 10, 320, 2400);
 		
 		public static readonly EditorPrefsIntSlider WindowHeight =
-			new EditorPrefsIntSlider("DeadMosquito.QuickEditor.WindowHeight." + ProjectName,
-				"Window height", 10, 100, 2400);
+			new EditorPrefsIntSlider("DeadMosquito.InstantEditor.WindowHeight." + ProjectName,
+				"Window height", 10, 240, 2400);
 		
 		public static readonly EditorPrefsEnum EditorColor =
-			new EditorPrefsEnum("DeadMosquito.QuickEditor.EditorColor." + ProjectName,
+			new EditorPrefsEnum("DeadMosquito.InstantEditor.EditorColor." + ProjectName,
 				"Editor window height", NoteColor.Clean);
 
 		static string ProjectName
@@ -41,13 +41,13 @@ namespace DeadMosquito.QuickEditor
 			}
 		}
 
-		[PreferenceItem("QuickEditor")]
+		[PreferenceItem("InstantEditor")]
 		public static void EditorPreferences()
 		{
 			EditorGUILayout.HelpBox(
-				"Change this setting to new location of QuickEditor if you move the folder around in your project.",
+				"Change this setting to new location of InstantEditor if you move the folder around in your project.",
 				MessageType.Warning);
-			QuickEditorHomeFolder.Draw();
+			InstantEditorHomeFolder.Draw();
 			EditorGUILayout.Space();
 			OffsetInProjectView.Draw();
 			FontSize.Draw();

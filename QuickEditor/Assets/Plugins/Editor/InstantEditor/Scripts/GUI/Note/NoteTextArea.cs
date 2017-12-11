@@ -1,5 +1,5 @@
 ﻿#if UNITY_EDITOR
-namespace DeadMosquito.QuickEditor
+namespace DeadMosquito.InstantEditor
 {
 	using System;
 	using UnityEditor;
@@ -51,7 +51,7 @@ namespace DeadMosquito.QuickEditor
 			_scroll = EditorGUILayout.BeginScrollView(_scroll);
 			EditorGUI.BeginChangeCheck();
 			var textAreaTextStyle = _isTooMuchText ? Assets.Styles.TooBigMessageText : Assets.Styles.TextArea;
-			textAreaTextStyle.fontSize = QuickEditorEditorSettings.FontSize;
+			textAreaTextStyle.fontSize = InstantEditorEditorSettings.FontSize;
 			_text = EditorGUILayout.TextArea(_text, textAreaTextStyle);
 
 			if (EditorGUI.EndChangeCheck())
@@ -70,7 +70,7 @@ namespace DeadMosquito.QuickEditor
 
 		static void DrawNoteBackground(Rect rect, Color backgroundColor)
 		{
-			QuickEditorGUI.ColorRect(rect, backgroundColor, Color.clear);
+			GUIUtils.ColorRect(rect, backgroundColor, Color.clear);
 		}
 
 		static Rect GetTextAreaRect(Rect noteRect)

@@ -1,13 +1,13 @@
 ﻿#if UNITY_EDITOR
-namespace DeadMosquito.QuickEditor
+namespace DeadMosquito.InstantEditor
 {
 	using UnityEditor;
 	using UnityEngine;
 
 	[InitializeOnLoad]
-	public static class QuickEditor
+	public static class InstantEditor
 	{
-		static QuickEditor()
+		static InstantEditor()
 		{
 			EditorApplication.projectWindowItemOnGUI += AddEditIcon;
 		}
@@ -20,7 +20,7 @@ namespace DeadMosquito.QuickEditor
 
 		static void AddEditButton(string guid, Rect rect)
 		{
-			var iconRect = QuickEditorGUI.GetProjectViewIconRect(rect);
+			var iconRect = GUIUtils.GetProjectViewIconRect(rect);
 
 			var isInFocus = rect.HasMouseInside();
 			var isFile = FileUtils.IsFile(AssetDatabase.GUIDToAssetPath(guid));
@@ -42,7 +42,7 @@ namespace DeadMosquito.QuickEditor
 
 		static void ShowEditor(Rect iconRect, string guid)
 		{
-			PopupWindow.Show(iconRect, new QuickEditorPopupWindowContent(guid));
+			PopupWindow.Show(iconRect, new InstantEditorWindowContent(guid));
 		}
 	}
 }

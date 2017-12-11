@@ -1,4 +1,4 @@
-﻿namespace DeadMosquito.QuickEditor
+﻿namespace DeadMosquito.InstantEditor
 {
 	using System.IO;
 

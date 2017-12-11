@@ -1,5 +1,5 @@
 ﻿#if UNITY_EDITOR
-namespace DeadMosquito.QuickEditor
+namespace DeadMosquito.InstantEditor
 {
 	using System;
 	using UnityEditor;
@@ -27,7 +27,7 @@ namespace DeadMosquito.QuickEditor
 		public void OnGUI(Rect rect, Colors.NoteColorCollection colors)
 		{
 			var headerRect = GetHeaderRect(rect);
-			QuickEditorGUI.ColorRect(headerRect, colors.header, Color.clear);
+			GUIUtils.ColorRect(headerRect, colors.header, Color.clear);
 			
 			EditorGUILayout.LabelField(_title, Assets.Styles.HeaderFileNameText);
 
@@ -65,17 +65,17 @@ namespace DeadMosquito.QuickEditor
 
 		static bool SaveButton(Rect headerRect)
 		{
-			return QuickEditorGUI.TextureButton(GetSaveBtnRect(headerRect), Assets.Textures.SaveTexture, "Save changes and overwrite file");
+			return GUIUtils.TextureButton(GetSaveBtnRect(headerRect), Assets.Textures.SaveTexture, "Save changes and overwrite file");
 		}
 
 		static bool CloseButton(Rect headerRect)
 		{
-			return QuickEditorGUI.TextureButton(GetCloseBtnRect(headerRect), Assets.Textures.CloseTexture, "Close editor");
+			return GUIUtils.TextureButton(GetCloseBtnRect(headerRect), Assets.Textures.CloseTexture, "Close editor");
 		}
 
 		static bool RestoreButton(Rect headerRect)
 		{
-			return QuickEditorGUI.TextureButton(GetRestoreBtnRect(headerRect), Assets.Textures.RestoreTexture, "Restore original text");
+			return GUIUtils.TextureButton(GetRestoreBtnRect(headerRect), Assets.Textures.RestoreTexture, "Restore original text");
 		}
 
 		#region rects

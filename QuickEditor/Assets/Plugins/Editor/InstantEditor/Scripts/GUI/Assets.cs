@@ -1,7 +1,6 @@
 ﻿#if UNITY_EDITOR
-namespace DeadMosquito.QuickEditor
+namespace DeadMosquito.InstantEditor
 {
-	using System.Collections.Generic;
 	using System.IO;
 	using UnityEditor;
 	using UnityEngine;
@@ -19,7 +18,7 @@ namespace DeadMosquito.QuickEditor
 
 			static Styles()
 			{
-				var fontPath = Path.Combine(QuickEditorEditorSettings.QuickEditorHomeFolder, "Assets/SourceCodePro-Regular.ttf");
+				var fontPath = Path.Combine(InstantEditorEditorSettings.InstantEditorHomeFolder, "Assets/SourceCodePro-Regular.ttf");
 				var font = AssetDatabase.LoadAssetAtPath<Font>(fontPath);
 
 				TextArea = new GUIStyle(EditorStyles.textArea)
@@ -53,7 +52,7 @@ namespace DeadMosquito.QuickEditor
 				TooBigMessageText.alignment = TextAnchor.MiddleCenter;
 				TooBigMessageText.stretchHeight = true;
 
-				var skinPath = Path.Combine(QuickEditorEditorSettings.QuickEditorHomeFolder, "Assets/ScrollGUISkin.asset");
+				var skinPath = Path.Combine(InstantEditorEditorSettings.InstantEditorHomeFolder, "Assets/ScrollGUISkin.asset");
 				Skin = AssetDatabase.LoadAssetAtPath<GUISkin>(skinPath);
 
 				if (Skin == null)
@@ -85,7 +84,7 @@ namespace DeadMosquito.QuickEditor
 			static string GetTexturePath(string name)
 			{
 				var relativePath = Path.Combine("Assets/GUI", name + ".png");
-				return Path.Combine(QuickEditorEditorSettings.QuickEditorHomeFolder, relativePath);
+				return Path.Combine(InstantEditorEditorSettings.InstantEditorHomeFolder, relativePath);
 			}
 		}
 	}
