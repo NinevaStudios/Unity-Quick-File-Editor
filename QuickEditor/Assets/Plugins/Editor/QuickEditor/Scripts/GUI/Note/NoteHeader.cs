@@ -13,24 +13,28 @@ namespace DeadMosquito.QuickEditor
 		readonly Action _onSaveBtnClick;
 		readonly Action _onRestore;
 		readonly bool _isFileTooBig;
+		readonly string _title;
 
-		public NoteHeader(bool isFileTooBig, Action onClose, Action onSave, Action onRestore)
+		public NoteHeader(bool isFileTooBig, string title, Action onClose, Action onSave, Action onRestore)
 		{
 			_onCloseBtnClick = onClose;
 			_onSaveBtnClick = onSave;
 			_onRestore = onRestore;
 			_isFileTooBig = isFileTooBig;
+			_title = title;
 		}
 
 		public void OnGUI(Rect rect, Colors.NoteColorCollection colors)
 		{
 			var headerRect = GetHeaderRect(rect);
 			QuickEditorGUI.ColorRect(headerRect, colors.header, Color.clear);
+			
+			EditorGUILayout.LabelField(_title, Assets.Styles.HeaderFileNameText);
 
 			if (!_isFileTooBig)
 			{
-			DrawSaveButton(headerRect);
-			DrawRestoreButton(headerRect);
+				DrawSaveButton(headerRect);
+				DrawRestoreButton(headerRect);
 			}
 			DrawColorPickerButton(headerRect);
 		}
@@ -68,7 +72,7 @@ namespace DeadMosquito.QuickEditor
 		{
 			return QuickEditorGUI.TextureButton(GetCloseBtnRect(headerRect), Assets.Textures.CloseTexture, "Close editor");
 		}
-		
+
 		static bool RestoreButton(Rect headerRect)
 		{
 			return QuickEditorGUI.TextureButton(GetRestoreBtnRect(headerRect), Assets.Textures.RestoreTexture, "Restore original text");
@@ -91,10 +95,16 @@ namespace DeadMosquito.QuickEditor
 		{
 			return new Rect(0, headerRect.y, headerRect.height, headerRect.height);
 		}
-		
+
 		static Rect GetRestoreBtnRect(Rect headerRect)
 		{
 			return new Rect(headerRect.width - 2 * headerRect.height, headerRect.y, headerRect.height, headerRect.height);
+		}
+		
+		static Rect GetTitleRect(Rect headerRect)
+		{
+			return headerRect;
+//			return new Rect(headerRect.width - 2 * headerRect.height, headerRect.y, headerRect.height, headerRect.height);
 		}
 
 		#endregion

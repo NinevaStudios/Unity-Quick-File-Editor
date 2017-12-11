@@ -11,6 +11,7 @@ namespace DeadMosquito.QuickEditor
 		public static class Styles
 		{
 			public static readonly GUIStyle TextArea;
+			public static readonly GUIStyle HeaderFileNameText;
 			public static readonly GUIStyle PlusLabel;
 			public static readonly GUIStyle TooBigMessageText;
 
@@ -31,6 +32,13 @@ namespace DeadMosquito.QuickEditor
 					font = font,
 					stretchHeight = true,
 					stretchWidth = true
+				};
+				HeaderFileNameText = new GUIStyle(EditorStyles.boldLabel)
+				{
+					alignment = TextAnchor.MiddleCenter,
+					stretchHeight = true,
+					stretchWidth = true, 
+					fixedHeight = NoteHeader.Height
 				};
 				PlusLabel = new GUIStyle(EditorStyles.boldLabel)
 				{

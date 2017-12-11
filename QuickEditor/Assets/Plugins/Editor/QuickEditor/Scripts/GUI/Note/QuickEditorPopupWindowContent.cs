@@ -29,7 +29,7 @@ namespace DeadMosquito.QuickEditor
 				_originalText = "This file is too large. Unfortunately Unity allows only 65K characters in the editor text area";
 			}
 
-			_header = new NoteHeader(isTooLarge, OnCloseButtonClick, OnSaveButtonClick, OnRestoreButtonClick);
+			_header = new NoteHeader(isTooLarge, Path.GetFileName(_filePath), OnCloseButtonClick, OnSaveButtonClick, OnRestoreButtonClick);
 			_textArea = isTooLarge ? NoteTextArea.CreateTooMuchText() : NoteTextArea.Create(_originalText, OnTextUpdated);
 		}
 
